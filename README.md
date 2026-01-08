@@ -4,6 +4,12 @@
 ## 📍 System Architecture: The Personal Cloud
 This repository serves as the **Design Document** and **Control Plane** for my Raspberry Pi 5 micro-service cluster. 
 
+## 🤖 AI Agent Protocol
+This repository enables agentic workflows via the **`AGENTS.md`** file.
+- **Local Context**: `AGENTS.md` in this folder defines the project's specific role and config.
+- **Global Context**: The Root `AGENTS.md` (in the workspace root) maps the entire polyrepo ecosystem.
+**Rule**: AI agents must update these files after architectural changes to maintain self-documentation.
+
 ### 🏗️ Current Framework: Phase 1 (Foundations)
 I am currently transitioning from a standalone resume to a **Polyrepo Gateway** architecture. This setup allows me to host dynamic, database-driven applications on my home lab while maintaining 100% uptime through static fallbacks.
 
