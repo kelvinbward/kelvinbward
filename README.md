@@ -54,7 +54,7 @@ The infrastructure is split into a **Provider** (pi-cluster-configs) and **Consu
 | :--- | :--- | :--- | :--- |
 | [Resume](https://github.com/kelvinbward/resume) | Full-Stack App | Node.js, PostgreSQL, Nginx | [Live Demo](https://www.kelvinbward.com) |
 | [Infra (Private)](https://github.com/kelvinbward/pi-cluster-configs) | Gateway Config | Docker Compose, YAML | Secure Vault |
-| [Goobface](https://github.com/kelvinbward/goobface) | Astro Framework |  Docker Compose | [Live Demo](https://www.goobface.com)
+| [Goobface](https://github.com/kelvinbward/goobface) | Full-Stack App | Astro, Docker Compose | [Live Demo](https://www.goobface.com)
 
 ### 🛠️ Building Your Own Private Cloud
 For those interested in replicating this **Polyrepo Provider/Consumer** pattern, here is the blueprint:
