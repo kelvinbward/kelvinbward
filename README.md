@@ -28,7 +28,6 @@ graph TD
     RES -->|Routed by| WG
 
     CAJS -->|Routed by| WG
-    GOOB -->|Static Assets| KBW
 
     %% Documentation Links
     KBW -.-> PCC
