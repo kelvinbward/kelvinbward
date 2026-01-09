@@ -7,6 +7,7 @@ Welcome to my personal monorepo-style polyrepo setup. This repository (`kelvinbw
 The following diagram illustrates the relationship between the various repositories and services in my "Personal Cloud":
 
 ```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'lineColor': '#8b949e' }}}%%
 graph TD
     subgraph Public["Public Zone"]
         KBW[kelvinbward]
@@ -17,10 +18,7 @@ graph TD
 
     subgraph Private["Private Zone"]
         PCC[pi-cluster-configs]
-    end
-
-    subgraph Infrastructure["Shared Infrastructure"]
-        WG[Web Gateway<br>(Nginx Proxy Manager)]
+        WG["Web Gateway<br>(Nginx Proxy Manager)"]
         DB[(Shared PostgreSQL)]
     end
 
@@ -30,21 +28,21 @@ graph TD
     RES -->|Routed by| WG
 
     CAJS -->|Routed by| WG
-
     GOOB -->|Static Assets| KBW
 
     %% Documentation Links
-    KBW -.->|Defines Architecture| PCC
-    KBW -.->|Defines Architecture| RES
-    KBW -.->|Defines Architecture| GOOB
-    KBW -.->|Defines Architecture| CAJS
+    KBW -.-> PCC
+    KBW -.-> RES
+    KBW -.-> GOOB
+    KBW -.-> CAJS
 
-    classDef public fill:#dbfbb6,stroke:#333,stroke-width:2px;
-    classDef private fill:#ffcccb,stroke:#333,stroke-width:2px;
-    classDef infra fill:#e0e0e0,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5;
+    %% Using 8-digit hex for transparency to avoid rgba() parser errors
+    classDef public stroke:#2ea043,stroke-width:2px,fill:#2ea0431a;
+    classDef private stroke:#f85149,stroke-width:2px,fill:#f851491a;
+    classDef infra stroke:#8b949e,stroke-width:2px,fill:#8b949e1a,stroke-dasharray: 5 5;
 
-    class KBW,RES,GOOB public;
-    class PCC,CAJS private;
+    class KBW,RES,GOOB,CAJS public;
+    class PCC private;
     class WG,DB infra;
 ```
 
