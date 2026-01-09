@@ -1,77 +1,63 @@
-# 🏛️ Kelvin Ward | Cloud Architect & ServiceNow Developer
-> "Enterprise solutions at scale; personal projects at the edge."
+# Kelvin Ward
 
-## 📍 System Architecture: The Personal Cloud
-This repository serves as the **Design Document** and **Control Plane** for my Raspberry Pi 5 micro-service cluster. 
+Welcome to my personal monorepo-style polyrepo setup. This repository (`kelvinbward`) acts as the public face and documentation hub for my ecosystem of projects.
 
-## 🤖 AI Agent Protocol
-This repository enables agentic workflows via the **`AGENTS.md`** file.
-- **Local Context**: `AGENTS.md` in this folder defines the project's specific role and config.
-- **Global Context**: The Root `AGENTS.md` (in the workspace root) maps the entire polyrepo ecosystem.
-**Rule**: AI agents must update these files after architectural changes to maintain self-documentation.
+## 🏗 System Architecture
 
-### 🏗️ Current Framework: Phase 1 (Foundations)
-I am currently transitioning from a standalone resume to a **Polyrepo Gateway** architecture. This setup allows me to host dynamic, database-driven applications on my home lab while maintaining 100% uptime through static fallbacks.
+The following diagram illustrates the relationship between the various repositories and services in my "Personal Cloud":
 
-### 🏗️ Conceptual Architecture
-This diagram represents the Service Discovery and Polyrepo mapping for my Raspberry Pi 5 micro-service cluster.
 ```mermaid
 graph TD
-    User((Internet User)) -->|kelvinbward.com| Gateway[Nginx Reverse Proxy]
-    
-    subgraph "Core Infrastructure (pi-cluster-configs)"
-        Gateway
+    subgraph Public["Public Zone"]
+        KBW[kelvinbward]
+        RES[resume]
+        GOOB[goobface]
+        CAJS[creativeAudioJS]
+    end
+
+    subgraph Private["Private Zone"]
+        PCC[pi-cluster-configs]
+    end
+
+    subgraph Infrastructure["Shared Infrastructure"]
+        WG[Web Gateway<br>(Nginx Proxy Manager)]
         DB[(Shared PostgreSQL)]
     end
 
-    subgraph "Resume App (resume repo)"
-        Gateway -->|/resume| Web[Frontend Container]
-        Gateway -->|/api| API[Backend API]
-        API -->|Internal Network| DB
-    end
+    %% Network Connections
+    RES -->|Depends on| PCC
+    RES -->|Connects to| DB
+    RES -->|Routed by| WG
 
-    subgraph "High-Availability Fallback"
-        User -->|kelvinbward.github.io/resume| GHPages[GitHub Pages - Static Version]
-    end
+    CAJS -->|Routed by| WG
 
-    style Gateway fill:#38bdf8,stroke:#0ea5e9,color:#fff
-    style DB fill:#38bdf8,stroke:#0ea5e9,color:#fff
-    style GHPages fill:#1e293b,stroke:#334155,color:#fff
+    GOOB -->|Static Assets| KBW
+
+    %% Documentation Links
+    KBW -.->|Defines Architecture| PCC
+    KBW -.->|Defines Architecture| RES
+    KBW -.->|Defines Architecture| GOOB
+    KBW -.->|Defines Architecture| CAJS
+
+    classDef public fill:#dbfbb6,stroke:#333,stroke-width:2px;
+    classDef private fill:#ffcccb,stroke:#333,stroke-width:2px;
+    classDef infra fill:#e0e0e0,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5;
+
+    class KBW,RES,GOOB public;
+    class PCC,CAJS private;
+    class WG,DB infra;
 ```
-- **Status**: 🟢 Design Phase / 🟡 Cluster In-Progress
-- **Host**: Raspberry Pi 5 (8GB)
-- **Orchestration**: Docker & Nginx Reverse Proxy (Polyrepo)
 
-### 🔄 Workflow
-The infrastructure is split into a **Provider** (pi-cluster-configs) and **Consumers** (functional apps like `resume`).
-1.  **Core Services**: The `pi-cluster-configs` repo defines the shared `web_gateway` network and central `resume-db-1`.
-2.  **App deployment**: The `resume` app attaches to the pre-existing `web_gateway` network and connects to the shared DB using the stable hostname `resume-db-1`.
-3.  **Routing**: The Gateway proxies requests to the appropriate app containers via Docker internal DNS.
+## 📚 Repositories
 
-
-### 📂 Repository Showcase
-| Project | Role | Tech Stack | Status |
+| Repository | Visibility | Role | Status |
 | :--- | :--- | :--- | :--- |
-| [Resume](https://github.com/kelvinbward/resume) | Full-Stack App | Node.js, PostgreSQL, Nginx | [Live Demo](https://www.kelvinbward.com) |
-| [Infra (Private)](https://github.com/kelvinbward/pi-cluster-configs) | Gateway Config | Docker Compose, YAML | Secure Vault |
-| [Goobface](https://github.com/kelvinbward/goobface) | Full-Stack App | Astro, Docker Compose | [Live Demo](https://www.goobface.com)
+| **[kelvinbward](.)** | Public | **Root & Profile**. Documentation hub and static site. | - |
+| **[resume](../resume)** | Public | Full-stack Vue.js/Node.js application. | [Live](https://www.kelvinbward.com) |
+| **[goobface](../goobface)** | Public | Game showcase (Astro/Phaser). | [Live](https://www.goobface.com) |
+| **[creativeAudioJS](../creativeAudioJS)** | Public | Audio experiments (Tone.js). | [Demo](https://kelvinbward.github.io/creativeAudioJS) |
+| **[pi-cluster-configs](../pi-cluster-configs)** | Private | Infrastructure configuration (Nginx, DB). | Internal |
 
-### 🛠️ Building Your Own Private Cloud
-For those interested in replicating this **Polyrepo Provider/Consumer** pattern, here is the blueprint:
+## 🚀 Getting Started
 
-#### 1. The Provider Repo (`pi-cluster-configs`)
-This private repository holds the keys to the castle.
-- **Gateway**: Defines an external bridge network (e.g., `web_gateway`).
-- **Core Services**: Hosts shared databases (Postgres, Redis) attached to this network.
-- **Secrets**: `.env` files and certificates are stored here, never in app repos.
-
-#### 2. The Consumer Repos (e.g., `resume`)
-Public application repositories that are unaware of the underlying hardware.
-- **Network**: Configured with `external: true` to attach to `web_gateway`.
-- **Config**: Connects to services via stable container names (e.g., `DB_HOST=resume-db-1`).
-- **Standalone Mode**: Includes a `docker-compose.standalone.yml` that mocks the shared infra for public users.
-
-## 🤝 Contributing & Feedback
-I treat my personal infrastructure like an open-source enterprise project.
-1. **Explore**: View my [Architecture Blueprint](#) (Link to your diagram).
-2. **Connect**: Reach out for collaborations on [LinkedIn](https://www.linkedin.com/in/kelvinbward/).
+Please refer to [AGENTS.md](./AGENTS.md) for the "Root" architecture documentation and contribution guidelines.
