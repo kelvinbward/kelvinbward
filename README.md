@@ -57,4 +57,21 @@ graph TD
 
 ## 🚀 Getting Started
 
+Since this architecture splits public code from private infrastructure, you need to spin up a local "Private Cloud" to run the applications fully.
+
+### Bootstrap Your Own Private Cloud
+I have included a script to bootstrap the necessary infrastructure (Nginx Proxy Manager + PostgreSQL) locally.
+
+1.  **Run the Bootstrapper**:
+    ```bash
+    ./scripts/init_infra.sh
+    ```
+    This will create a `../pi-cluster-configs` directory and generate the necessary Docker Compose files.
+
+2.  **Start Services**:
+    Follow the output instructions from the script to start the Gateway and Database.
+
+3.  **Run Apps**:
+    You can now go to `resume/` or `goobface/` and run them—they will be able to connect to the shared database and network.
+
 Please refer to [AGENTS.md](./AGENTS.md) for the "Root" architecture documentation and contribution guidelines.
