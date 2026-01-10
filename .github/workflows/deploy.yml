@@ -33,11 +33,17 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # Next.js static export outputs to 'out' directory
+          path: './out'
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4

@@ -1,0 +1,13 @@
+services:
+  kelvinbward-hub:
+    build: .
+    container_name: kelvinbward-hub
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - kelvinbward_net
+
+networks:
+  kelvinbward_net:
+    driver: bridge
