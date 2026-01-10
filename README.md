@@ -22,13 +22,16 @@ graph TD
     subgraph Public["Public Zone"]
         KBW["kelvinbward (Hub)"]
         RES["resume (Professional)"]
+        CAJS["creativeAudioJS (POC)"]
+    end
+    
+    subgraph Independent["Independent Zone"]
         GOOB["goobface (Personal)"]
-        CAJS["creativeAudioJS (POC Experimental)"]
     end
 
     subgraph Private["Private Zone"]
         PCC[pi-cluster-configs]
-        WG["Web Gateway(Nginx Proxy Manager)"]
+        WG["Web Gateway"]
         DB[(Shared PostgreSQL)]
     end
 
@@ -36,14 +39,11 @@ graph TD
     RES -->|Depends on| PCC
     RES -->|Connects to| DB
     RES -->|Routed by| WG
-
-    CAJS -->|Routed by| WG
-
-    %% Documentation Links
-    KBW -.-> PCC
-    KBW -.-> RES
-    KBW -.-> GOOB
-    KBW -.-> CAJS
+    
+    %% Relationships
+    KBW -.->|Hosts| RES
+    KBW -.->|Links to| GOOB
+    KBW -.->|Links to| CAJS
 
     %% Using 8-digit hex for transparency to avoid rgba() parser errors
     classDef public stroke:#2ea043,stroke-width:2px,fill:#2ea0431a;
@@ -71,12 +71,13 @@ This architecture uses a **"Hybrid-Mono"** deployment model where `kelvinbward` 
 | Component | Repository | Deployment Path |
 | :--- | :--- | :--- |
 | **Hub** | `kelvinbward` | Root (`/`) |
-| **Resume** | `resume` | Subpath (`/resume/`) |
-| **Goobface** | `goobface` | Subpath (`/goobface/`) |
+| **Resume** | `resume` | Subpath (`/resume/`) &rarr; *Merged into Hub* |
+| **Goobface** | `goobface` | Standalone (`goobface.com`) &rarr; *Linked only* |
 
 ### Domain Configuration
-*   **Production Domain**: `kelvinbward.com` (or your custom domain) is configured **ONLY** on this `kelvinbward` repository.
-*   **Sub-Modules**: `resume` and `goobface` do **NOT** need their own custom domains. Their GitHub Actions deploy built assets directly into this Hub's `gh-pages` branch.
+*   **Hub Domain**: `kelvinbward.com` serves the Hub and the `resume` app.
+*   **Goobface Domain**: `goobface.com` serves the `goobface` app independently.
+*   **Resume**: Does **NOT** need a custom domain; it is deployed directly into the Hub's `gh-pages`.
 
 ## 🚀 Getting Started
 
