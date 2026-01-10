@@ -65,6 +65,19 @@ graph TD
 | **[creativeAudioJS](https://github.com/kelvinbward/creativeAudioJS)** | Public | **Experiment Node**. Audio synthesis playground. | [Demo](https://kelvinbward.github.io/creativeAudioJS) |
 | **[pi-cluster-configs](https://github.com/kelvinbward/pi-cluster-configs)** | Private | **Engine Room**. Infrastructure configuration (Nginx, DB). | Internal |
 
+## 🌐 Deployment & Domain Strategy
+This architecture uses a **"Hybrid-Mono"** deployment model where `kelvinbward` acts as the single public entry point.
+
+| Component | Repository | Deployment Path |
+| :--- | :--- | :--- |
+| **Hub** | `kelvinbward` | Root (`/`) |
+| **Resume** | `resume` | Subpath (`/resume/`) |
+| **Goobface** | `goobface` | Subpath (`/goobface/`) |
+
+### Domain Configuration
+*   **Production Domain**: `kelvinbward.com` (or your custom domain) is configured **ONLY** on this `kelvinbward` repository.
+*   **Sub-Modules**: `resume` and `goobface` do **NOT** need their own custom domains. Their GitHub Actions deploy built assets directly into this Hub's `gh-pages` branch.
+
 ## 🚀 Getting Started
 
 Since this architecture splits public code from private infrastructure, you need to spin up a local "Private Cloud" to run the applications fully.
