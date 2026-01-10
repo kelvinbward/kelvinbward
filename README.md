@@ -20,15 +20,15 @@ The following diagram illustrates the relationship between the various repositor
 %%{init: {'theme': 'dark', 'themeVariables': { 'lineColor': '#8b949e' }}}%%
 graph TD
     subgraph Public["Public Zone"]
-        KBW[kelvinbward<br>(Hub)]
-        RES[resume<br>(Professional)]
-        GOOB[goobface<br>(Personal)]
+        KBW["kelvinbward\n(Hub)"]
+        RES["resume\n(Professional)"]
+        GOOB["goobface\n(Personal)"]
         CAJS[creativeAudioJS]
     end
 
     subgraph Private["Private Zone"]
         PCC[pi-cluster-configs]
-        WG["Web Gateway<br>(Nginx Proxy Manager)"]
+        WG["Web Gateway\n(Nginx Proxy Manager)"]
         DB[(Shared PostgreSQL)]
     end
 
