@@ -1,0 +1,38 @@
+---
+title: "Architectural Evolution: From Monolith to Federation"
+date: "2026-01-10"
+description: "A deep dive into the journey separated by distinct architectural phases."
+---
+
+# Architectural Evolution: From Monolith to Federation
+
+Building a personal portfolio that encompasses professional engineering, game development, and hardware hacking is a challenge in **separation of concerns**.
+
+Over the last few years, my "Personal Cloud" has evolved through three distinct phases.
+
+## 1. The Disconnected Polyrepo
+
+Initially, every project was an island.
+- `resume` was a Vue app.
+- `goobface` was HTML.
+- `api` was a Python script.
+
+**Pros**: Total isolation.
+**Cons**: No shared utility, fragmented identity, and zero code reuse.
+
+## 2. The "Hybrid-Mono" Attempt
+
+I tried to stitch them together using Git Submodules and a "Monster Hub" that built everything.
+
+> "It worked until it didn't."
+
+The complexity of synchronizing build pipelines across `kelvinbward` (Professional) and `goobface` (Creative) became a burden. Why should a change in my Space Invaders clone break my Resume deploy?
+
+## 3. The Federated Solution (Current)
+
+Today, I use a **Federated Architecture** or "Dual Hub" strategy.
+
+- **Professional Hub**: This site. Built with **Next.js**. It is the source of truth for my career.
+- **Personal Hub**: [Goobface.com](https://www.goobface.com). Built with **Astro**. It is the playground for chaos.
+
+They share **Infrastructure** (PostgreSQL, Gateway) but not **Code**. This allows me to use the right tool for the job (React for Apps, Astro for Content) without fighting a Monorepo toolchain.
