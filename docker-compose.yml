@@ -1,0 +1,14 @@
+services:
+  kelvinbward-hub:
+    build: .
+    container_name: kelvinbward-hub
+    restart: unless-stopped
+    networks:
+      - web_gateway
+    environment:
+      - VIRTUAL_HOST=kelvinbward.localhost
+      - VIRTUAL_PORT=80
+
+networks:
+  web_gateway:
+    external: true

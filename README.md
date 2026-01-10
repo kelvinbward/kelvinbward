@@ -1,130 +1,92 @@
 # Kelvin B. Ward
 
-Welcome to the central hub of my digital presence. This repository operates as a **Hybrid-Mono** system, distinctively separating my professional engineering work from my personal creative experiments.
+Welcome to the central hub of my digital presence. This repository operates as a **Federated System Hub**, distinctively separating my professional engineering work from my personal creative experiments.
 
 ## 🎯 Choose Your Path
 
 | [**Professional Portfolio**](https://www.kelvinbward.com) | [**Personal Sandbox**](https://www.goobface.com) |
 | :--- | :--- |
 | **Focus**: Full-Stack Engineering, Cloud Architecture, Leadership | **Focus**: Game Dev, 3D Printing, Generative Audio |
-| **Tech**: Vue.js, Node.js, PostgreSQL, Docker | **Tech**: Astro, Phaser.js, Three.js, Tone.js |
-| [📂 View Source](https://github.com/kelvinbward/resume) | [📂 View Source](https://github.com/kelvinbward/goobface) |
+| **Tech**: Next.js, React, TailwindCSS, PostgreSQL | **Tech**: Astro, Phaser.js, Three.js, Tone.js |
+| [📂 View Source](https://github.com/kelvinbward/kelvinbward) | [📂 View Source](https://github.com/kelvinbward/goobface) |
 
 ---
 
 ## 🏗 System Architecture
 
-The following diagram illustrates the relationship between the various repositories and services in my "Personal Cloud":
+The ecosystem implements a **"Dual Hub" Federated Architecture**, allowing strict separation of concerns while sharing foundational infrastructure.
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': { 'lineColor': '#8b949e' }}}%%
 graph TD
     subgraph Public["Public Zone"]
-        KBW["kelvinbward (Hub)"]
-        RES["resume (Professional)"]
-        CAJS["creativeAudioJS (POC)"]
+        KBW["kelvinbward (PRO HUB)"]
+        GOOB["goobface (PERSONAL HUB)"]
+        RES["resume (App)"]
     end
     
-    subgraph Independent["Independent Zone"]
-        GOOB["goobface (Personal)"]
-    end
-
-    subgraph Private["Private Zone"]
+    subgraph Infrastructure["Shared Private Cloud"]
         PCC[pi-cluster-configs]
         WG["Web Gateway"]
         DB[(Shared PostgreSQL)]
     end
 
     %% Network Connections
-    RES -->|Depends on| PCC
+    KBW -->|Connects to| DB
     RES -->|Connects to| DB
-    RES -->|Routed by| WG
+    GOOB -->|Connects to| DB
     
     %% Relationships
     KBW -.->|Hosts| RES
     KBW -.->|Links to| GOOB
-    KBW -.->|Links to| CAJS
-
-    %% Using 8-digit hex for transparency to avoid rgba() parser errors
-    classDef public stroke:#2ea043,stroke-width:2px,fill:#2ea0431a;
-    classDef private stroke:#f85149,stroke-width:2px,fill:#f851491a;
+    GOOB -.->|Links to| CAJS["creativeAudioJS"]
+    
+    classDef pro stroke:#2ea043,stroke-width:2px,fill:#2ea0431a;
+    classDef creative stroke:#db6d28,stroke-width:2px,fill:#db6d281a;
     classDef infra stroke:#8b949e,stroke-width:2px,fill:#8b949e1a,stroke-dasharray: 5 5;
 
-    class KBW,RES,GOOB,CAJS public;
-    class PCC private;
-    class WG,DB infra;
+    class KBW,RES pro;
+    class GOOB,CAJS creative;
+    class PCC,WG,DB infra;
 ```
 
 ## 📚 Repository Map
 
-| Repository | Visibility | Role | Status |
+| Repository | Tech Stack | Role | Status |
 | :--- | :--- | :--- | :--- |
-| **[kelvinbward](https://github.com/kelvinbward/kelvinbward)** | Public | **System Hub**. The entry point and documentation root. | - |
-| **[resume](https://github.com/kelvinbward/resume)** | Public | **Professional Node**. Full-stack Vue.js/Node.js application. | [Live](https://www.kelvinbward.com) |
-| **[goobface](https://github.com/kelvinbward/goobface)** | Public | **Creative Node**. Game showcase & 3D printing blog. | [Live](https://www.goobface.com) |
-| **[creativeAudioJS](https://github.com/kelvinbward/creativeAudioJS)** | Public | **Experiment Node**. Audio synthesis playground. | [Demo](https://kelvinbward.github.io/creativeAudioJS) |
-| **[pi-cluster-configs](https://github.com/kelvinbward/pi-cluster-configs)** | Private | **Engine Room**. Infrastructure configuration (Nginx, DB). | Internal |
+| **[kelvinbward](https://github.com/kelvinbward/kelvinbward)** | Next.js / TypeScript | **Professional Hub**. The entry point and engineering blog. | - |
+| **[resume](https://github.com/kelvinbward/resume)** | Vue.js / Node.js | **Professional App**. Interactive resume application. | [Live](https://www.kelvinbward.com/resume/) |
+| **[goobface](https://github.com/kelvinbward/goobface)** | Astro / Phaser | **Creative Hub**. Game showcase & 3D printing blog. | [Live](https://www.goobface.com) |
+| **[creativeAudioJS](https://github.com/kelvinbward/creativeAudioJS)** | Vanilla JS / Tone.js | **Experiment**. Audio synthesis playground (Referenced by Goobface). | [Demo](https://kelvinbward.github.io/creativeAudioJS) |
+| **[pi-cluster-configs](https://github.com/kelvinbward/pi-cluster-configs)** | Ansible / Docker | **Engine Room**. Infrastructure configuration. | Internal |
+
+## 🚀 Execution Modes
+
+This Hub supports multiple modes of operation to ensure flexibility across development, standalone hosting, and cluster integration.
+
+| Mode | Command | Context |
+| :--- | :--- | :--- |
+| **Dev** | `npm run dev` | Local development with hot-reload. |
+| **Standalone** | `docker compose -f docker-compose.standalone.yml up` | Self-contained Nginx container exposing port 8080. |
+| **Cluster** | `docker compose up` | Integrating with `web_gateway` network (requires `pi-cluster-configs`). |
+| **Static** | `npm run build` | GitHub Pages deployment (Static HTML Export). |
+
+### Bootstrap Your Own Private Cloud
+To run the full "Cluster Mode", you can bootstrap a fresh `pi-cluster-configs` setup matching the production architecture:
+
+```bash
+# Initialize infrastructure
+./scripts/init_infra.sh
+```
 
 ## 🛡️ Security & Governance
 
-The integrity of this ecosystem is maintained through a "Defense in Depth" strategy, specifically tailored for a GitHub Free Tier environment.
+The integrity of this ecosystem is maintained through a "Defense in Depth" strategy.
 
-### 1. Code Ownership
-Critical infrastructure files (`/AGENTS.md`, `/docker-compose*`, `/.github/`, `/nginx/`) are protected by **CODEOWNERS**. Any changes to these locations require manual review.
-
-### 2. Automated Gatekeepers
-Every Pull Request triggers the `action-gatekeeper` workflow, which:
-*   Validates docker-compose configurations.
-*   Ensures protocol adherence (checking for `AGENTS.md`).
-*   Prevents regressions in critical paths.
-
-### 3. Branch Protection Strategy
-*   **Public Repositories**: Standard GitHub Branch Protection Rules deny direct pushes to `main`.
-*   **Private Repository (`pi-cluster-configs`)**: Since Free Tier lacks private branch protection:
-    *   **Client-Side**: Agents install mandatory `pre-push` hooks.
-    *   **Server-Side**: A custom `Main Branch Guard` workflow audits every push to `main` and fails if the actor is not the Owner, alerting on unauthorized access.
-
-## 🧩 Hybrid-Mono Design Pattern
-
-This architecture implements a **"Page-as-Repo"** philosophy, combining the isolation of Polyrepos with the unified experience of a Monorepo.
-
-*   **Isolation**: Each "function" (Professional Resume, Game Sandbox) lives in its own repository. This enforces strict boundaries and allows entirely independent tech stacks (Vue.js vs Astro) without dependency conflict.
-*   **Aggregation**: The `kelvinbward` System Hub acts as the "Monolithic Frontend". It aggregates the independent builds via GitHub Actions—pulling artifacts from child nodes and deploying them to subpaths (e.g., `/resume/`).
-*   **Outcome**:
-    *   **DevX**: Focus on one repository at a time.
-    *   **UserX**: Seamless navigation across a single domain (`kelvinbward.com`).
-
-## 🌐 Deployment & Domain Strategy
-This architecture uses a **"Hybrid-Mono"** deployment model where `kelvinbward` acts as the single public entry point.
-
-| Component | Repository | Deployment Path |
-| :--- | :--- | :--- |
-| **Hub** | `kelvinbward` | Root (`/`) |
-| **Resume** | `resume` | Subpath (`/resume/`) &rarr; *Merged into Hub* |
-| **Goobface** | `goobface` | Standalone (`goobface.com`) &rarr; *Linked only* |
-
-### Domain Configuration
-*   **Hub Domain**: `kelvinbward.com` serves the Hub and the `resume` app.
-*   **Goobface Domain**: `goobface.com` serves the `goobface` app independently.
-*   **Resume**: Does **NOT** need a custom domain; it is deployed directly into the Hub's `gh-pages`.
-
-## 🚀 Getting Started
-
-Since this architecture splits public code from private infrastructure, you need to spin up a local "Private Cloud" to run the applications fully.
-
-### Bootstrap Your Own Private Cloud
-I have included a script to bootstrap the necessary infrastructure (Nginx Proxy Manager + PostgreSQL) locally.
-
-1.  **Run the Bootstrapper**:
-    ```bash
-    ./scripts/init_infra.sh
-    ```
-    This will create a `../pi-cluster-configs` directory and generate the necessary Docker Compose files.
-
-2.  **Start Services**:
-    Follow the output instructions from the script to start the Gateway and Database.
-
-3.  **Run Apps**:
-    You can now go to `resume/` or `goobface/` and run them—they will be able to connect to the shared database and network.
-
-Please refer to [AGENTS.md](./AGENTS.md) for the "Root" architecture documentation and contribution guidelines.
+*   **Code Ownership**: Critical infrastructure files are protected by `CODEOWNERS`.
+*   **Agent Protocol**: All automated agents must strictly follow [AGENTS.md](./AGENTS.md), including:
+    *   **Branch Naming**: `feature/`, `fix/`, `infra/`.
+    *   **PR Generation**: Agents must currently generate local branches for review.
+    *   **Cleanup**: Automatic deletion of slate environment branches.
+*   **Branch Protection**: Direct pushes to `main` are restricted. All changes require PRs with passing build checks.
+*   **Secret Management**: No secrets in repo. Environment variables managed via `pi-cluster-configs`.

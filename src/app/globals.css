@@ -1,0 +1,67 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-prose-body: #c9d1d9;
+  --color-prose-headings: #ffffff;
+  --color-prose-leads: #8b949e;
+  --color-prose-links: #58a6ff;
+  --color-prose-bold: #ffffff;
+  --color-prose-counters: #8b949e;
+  --color-prose-bullets: #8b949e;
+  --color-prose-hr: #30363d;
+  --color-prose-quotes: #c9d1d9;
+  --color-prose-quote-borders: #30363d;
+  --color-prose-captions: #8b949e;
+  --color-prose-code: #c9d1d9;
+  --color-prose-pre-code: #c9d1d9;
+  --color-prose-pre-bg: #161b22;
+  --color-prose-th-borders: #30363d;
+  --color-prose-td-borders: #30363d;
+}
+
+.prose {
+  --tw-prose-body: var(--color-prose-body);
+  --tw-prose-headings: var(--color-prose-headings);
+  --tw-prose-lead: var(--color-prose-leads);
+  --tw-prose-links: var(--color-prose-links);
+  --tw-prose-bold: var(--color-prose-bold);
+  --tw-prose-counters: var(--color-prose-counters);
+  --tw-prose-bullets: var(--color-prose-bullets);
+  --tw-prose-hr: var(--color-prose-hr);
+  --tw-prose-quotes: var(--color-prose-quotes);
+  --tw-prose-quote-borders: var(--color-prose-quote-borders);
+  --tw-prose-captions: var(--color-prose-captions);
+  --tw-prose-code: var(--color-prose-code);
+  --tw-prose-pre-code: var(--color-prose-pre-code);
+  --tw-prose-pre-bg: var(--color-prose-pre-bg);
+  --tw-prose-th-borders: var(--color-prose-th-borders);
+  --tw-prose-td-borders: var(--color-prose-td-borders);
+  max-width: 65ch;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
