@@ -1,38 +1,45 @@
 ---
-title: "Architectural Evolution: From Monolith to Federation"
+title: "One Week, Three Architectures: A Case Study in Agentic Collaboration"
 date: "2026-01-10"
-description: "A deep dive into the journey separated by distinct architectural phases."
+description: "How I rebuilt my entire digital footprint in 7 days using AI Agents as force multipliers."
 ---
 
-# Architectural Evolution: From Monolith to Federation
+# One Week, Three Architectures
 
-Building a personal portfolio that encompasses professional engineering, game development, and hardware hacking is a challenge in **separation of concerns**.
+Seven days ago, I had a static resume and a collection of scattered scripts. Today, I have a **Federated System Hub** operating a "Dual Hub" strategy with isolated production pipelines.
 
-Over the last few years, my "Personal Cloud" has evolved through three distinct phases.
+This wasn't a multi-year transformation. It was a single week of vacation, fueled by a desire to experiment with **Advanced Agentic Coding**.
 
-## 1. The Disconnected Polyrepo
+## The Goal: "Enterprise Rigor, Hacker Fun"
 
-Initially, every project was an island.
-- `resume` was a Vue app.
-- `goobface` was HTML.
-- `api` was a Python script.
+I wanted to prove a point: You can apply enterprise-grade discipline (GitOps, Infrastructure-as-Code, Containerization) to personal projects without killing the joy of experimentation.
 
-**Pros**: Total isolation.
-**Cons**: No shared utility, fragmented identity, and zero code reuse.
+The challenge was **Speed vs. Complexity**. Building a custom Kubernetes-like platform on Raspberry Pis usually takes months. I wanted it done before my coffee grew cold.
 
-## 2. The "Hybrid-Mono" Attempt
+## The Evolution
 
-I tried to stitch them together using Git Submodules and a "Monster Hub" that built everything.
+In just 168 hours, we iterated through three distinct architectural phases:
 
-> "It worked until it didn't."
+### Phase 1: The Disconnected Polyrepo
+Every project was an island. My resume was a Vue app; my game prototypes were raw HTML.
+*   **Problem**: No shared identity, no common infrastructure.
 
-The complexity of synchronizing build pipelines across `kelvinbward` (Professional) and `goobface` (Creative) became a burden. Why should a change in my Space Invaders clone break my Resume deploy?
+### Phase 2: The "Hybrid-Mono" Experiment
+I attempted to stitch everything together using Git Submodules and a "Monster Hub".
+*   **Result**: "It worked until it didn't."
+*   **Lesson**: Tying a Game Jam prototype's build pipeline to a Professional Resume's deploy cycle is a recipe for frustration.
 
-## 3. The Federated Solution (Current)
+### Phase 3: The Federated Solution (Dual Hub)
+We landed on a separation of concerns that mirrors micro-frontend architectures I've managed at scale:
 
-Today, I use a **Federated Architecture** or "Dual Hub" strategy.
+1.  **Professional Hub (`kelvinbward`)**: Built with **Next.js**. Strict governance, type safety, and clean lines.
+2.  **Creative Hub (`goobface`)**: Built with **Astro**. A chaotic playground for Phaser.js and Three.js physics experiments.
+3.  **Shared Infrastructure**: Both consume the same private cloud resources (PostgreSQL, Gateway) via a standardized "Engine Room" repo.
 
-- **Professional Hub**: This site. Built with **Next.js**. It is the source of truth for my career.
-- **Personal Hub**: [Goobface.com](https://www.goobface.com). Built with **Astro**. It is the playground for chaos.
+## The Agentic Difference
 
-They share **Infrastructure** (PostgreSQL, Gateway) but not **Code**. This allows me to use the right tool for the job (React for Apps, Astro for Content) without fighting a Monorepo toolchain.
+This refactor wasn't a solo effort. It was a **Pair Programming** session with AI.
+
+We didn't just generate code; we debated architecture. I provided the "Commander's Intent"—the vision of a professional-yet-creative dual identity—and the Agent handled the tactical execution of Dockerfiles, GitHub Actions, and CSS variables.
+
+This underscores a shift in how we build. The "Senior Engineer" is no longer just a code writer, but an **Architect of Context**, guiding capable agents to manifest complex systems in record time.
