@@ -79,6 +79,13 @@ function renderHeader(data) {
                 <i class="fab fa-linkedin"></i>
             </a>`;
     }
+
+    if (data.links && data.links.github) {
+        socialContainer.innerHTML += `
+            <a href="${data.links.github}" target="_blank" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>`;
+    }
 }
 
 function renderObjective(data) {
