@@ -1,5 +1,31 @@
 # 🧠 Project: kelvinbward (Public)
 
+## 0. 🛡️ Session Startup Protocol (MANDATORY)
+*Because this is a Free Tier environment, Branch Protection is manual. You must install safety hooks immediately upon starting a session.*
+
+**Step 1:** Upon entering **ANY** repository (root or child node), execute this command to prevent accidental pushes to `main`:
+```bash
+echo '#!/bin/sh
+branch=$(git symbolic-ref HEAD | sed -e "s,.*/\(.*\),\1,")
+if [ "$branch" = "main" ]; then
+  echo "🚫 DIRECT PUSH TO MAIN IS BLOCKED. USE A PR."
+  exit 1
+fi' > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+```
+
+**Step 2:** Verify you are on a feature branch (e.g., `feature/task-name`) before writing code.
+
+## 🤝 Human Protocol
+*Since "Require Approvals" is disabled to allow Solo-Maintainer merging, strict discipline is required.*
+1.  **Process**:
+    *   Create Feature Branch -> Push -> Open PR.
+    *   **Self-Review**: Review the "Files changed" tab in the PR.
+    *   **Merge**: Use "Squash and merge" or "Rebase and merge" to keep history clean.
+2.  **Emergency Bypass**:
+    *   Only acceptable for critical hotfixes when GitHub Actions are down.
+    *   Requires manual admin override.
+
+
 ## 📋 Role
 **System Hub**: This repository is the central entry point for the "Kelvin B. Ward" digital ecosystem. It directs traffic to specialized nodes (Professional vs. Personal) and holds the global architectural definition.
 1.  **Professional Hub**: Hosts the static build of the `resume` application (via GitHub Actions).
