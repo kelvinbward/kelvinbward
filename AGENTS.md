@@ -19,9 +19,12 @@ After completing ANY task within an individual project folder, you MUST:
 3.  **Summarize the "Next State"** so the user can resume work seamlessly.
 
 ## 🛠 Shared Infrastructure Rules
-- All apps connect via the `web_gateway` Docker network.
-- Path-based routing is preferred over host-based routing (e.g., `/api` redirects).
-- Use `localhost` for local development and `www.kelvinbward.com` for production logic.
+- **Network**: All apps connect via the `web_gateway` Docker network (External).
+- **Dual Mode Architecture**:
+    - **Cluster Mode (Default)**: Use `docker-compose.cluster.yml` (or `docker-compose.yml` if no ports). NO exposed ports. Traffic via Gateway.
+    - **Standalone Mode (Dev)**: Use `docker-compose.standalone.yml`. Exposed ports allowed for isolated development.
+- **Routing**: Use `[app].localhost` subdomain routing via Nginx Proxy Manager.
+- **Consistency**: Container names must use suffix `-1` (e.g., `shared-cms-1`).
 
 ## 🌳 Git Branching & Workflow
 1. **Never commit directly to `main`**.
