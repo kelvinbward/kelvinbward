@@ -1,9 +1,9 @@
 # 🧠 Project: kelvinbward (Public)
 
 ## 📋 Role
-**Root & Profile**: This repository serves two purposes:
-1.  **Public Profile**: A showcase and documentation hub for my work.
-2.  **System Root**: The central source of truth for the Polyrepo architecture (`kelvinbward/AGENTS.md`). It governs the relationships, ports, and global patterns for all sub-repositories.
+**System Hub**: This repository is the central entry point for the "Kelvin B. Ward" digital ecosystem. It directs traffic to specialized nodes (Professional vs. Personal) and holds the global architectural definition.
+1.  **Professional Hub**: Hosts the static build of the `resume` application (via GitHub Actions).
+2.  **System Root**: The central source of truth for the Polyrepo architecture (`kelvinbward/AGENTS.md`).
 
 ## 📂 Project Map & Structure
 - **`pi-cluster-configs/`**: (Private) The "Engine Room". Contains Nginx Proxy Manager, shared PostgreSQL, and global network definitions.
