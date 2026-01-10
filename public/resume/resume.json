@@ -1,87 +1,113 @@
 {
     "id": 1,
     "name": "Kelvin Ward",
-    "title": "Senior ServiceNow Developer",
+    "title": "Senior Infrastructure & Automation Engineer",
     "contact": {
         "email": "kelvinbward@gmail.com",
         "phone": "(801) 921-2766",
-        "location": "Lehi, UT"
+        "location": "American Fork, UT"
     },
-    "objective": "To leverage over 15 years of enterprise technical experience and deep expertise in ServiceNow development to architect scalable ITSM and ITOM solutions. Seeking a Senior Developer role to drive process automation, enhance user experience, and deliver high-value business outcomes.",
-    "about": "Senior ServiceNow Developer with a strong foundation in enterprise storage and support engineering. Expert in translating complex business requirements into efficient ServiceNow solutions. Proven track record of building custom applications, optimizing alert management workflows (ITOM), and reducing operational costs through automation. Adept at cross-functional collaboration to streamline support operations.",
+    "links": {
+        "linkedin": "https://www.linkedin.com/in/kelvinbward/",
+        "github": "https://github.com/kelvinbward"
+    },
+    "objective": "Versatile Technical Lead seeking to drive process automation and operational maturity. Passionate about combining enterprise development (ServiceNow/JS) with modern development practices to solve complex challenges. Looking for a role that values deep technical expertise equally with the ability to mentor talent and build cohesive, high-performing teams",
+    "about": "Senior Technologist with over 15 years of experience, currently driving value as a Senior ServiceNow Developer. I combine deep-dive engineering expertise (Storage, Linux, DevOps) with a passion for strategic automation. Beyond the stack, I am a people-first leader who thrives on mentoring engineers and helping others ascend their career ladders. I believe that building scalable systems requires building capable teams, and I actively use my management background to foster a culture of technical excellence and collaborative growth.",
     "experience": [
         {
-            "role": "Technical Project Manager & ServiceNow Developer",
+            "role": "Senior ServiceNow Developer",
             "company": "Pure Storage",
-            "duration": "April 2013 - Present",
+            "duration": "Nov 2022 - Present",
             "location": "Lehi, UT",
+            "description": "Lead developer for the Customer Service Management (CSM) implementation and internal support tooling. Bridging the gap between complex infrastructure requirements and user-friendly service portals.",
             "highlights": [
-                "**ServiceNow Development**: Architected and developed a custom ServiceNow ticketing application for the SE CoE, centralizing case management and improving response times.",
-                "**ITOM & Event Management**: Led the refactoring of system alert infrastructure, integrating monitoring tools with ServiceNow to automate incident creation and routing.",
-                "**Process Automation**: Created cross-team workflows using Flow Designer and Business Rules to automate alert deployment, reducing manual overhead and deployment errors.",
-                "**Impact**: Achieved a $30k/month reduction in operational costs and reduced alert case volume by 50% through intelligent noise reduction and workflow optimization.",
-                "**Roles**: Progressed from Frontline Support to Engineering Manager, gaining comprehensive insight into the ITSM lifecycle needed to build effective support tools."
-            ],
-            "description": "Lead developer for internal support workflow tools and alert management systems. Leveraging deep domain knowledge to build custom ServiceNow applications that streamline operations for the Systems Engineering CoE."
+                "CSM Architecture: Spearheaded the implementation of Customer Service Management modules to streamline support operations.",
+                "System Design: Architected custom applications to replace legacy ticketing systems, improving data integrity and agent efficiency.",
+                "Full Stack Integration: Built integrations between ServiceNow and external infrastructure monitoring tools using REST APIs and Flow Designer.",
+                "Certified System Administrator: Earned the Certified System Administrator (CSA) designation from ServiceNow, demonstrating expertise in system administration and management."
+            ]
+        },
+        {
+            "role": "Technical Program Manager",
+            "company": "Pure Storage",
+            "duration": "Jul 2021 - Nov 2022",
+            "location": "Lehi, UT",
+            "description": "Technical lead focused on optimizing the 'Signal to Noise' ratio for system alerts across the entire Pure Storage product portfolio.",
+            "highlights": [
+                "Alert Optimization: Led a strategic initiative to refactor legacy alerting infrastructure, collaborating across engineering teams to deprecate outdated systems.",
+                "Cost Reduction: Achieved an estimated $30k/month reduction in operational costs by streamlining alert volume and storage overhead.",
+                "Workflow Automation: Created cross-team workflows to standardize alert deployment, significantly reducing manual overhead and configuration errors."
+            ]
+        },
+        {
+            "role": "Engineering Manager",
+            "company": "Pure Storage",
+            "duration": "Oct 2020 - Jul 2021",
+            "location": "Lehi, UT",
+            "description": "Operational leader for a specialized engineering team focused on alerting systems and reliability.",
+            "highlights": [
+                "Team Building: Formed and led a new engineering team dedicated to maintaining and improving the efficacy of alerting systems.",
+                "Reliability Engineering: Transitioned from reactive support to proactive Fleet Reliability Engineering, using Python and data analysis to identify systemic issues.",
+                "Process Refactoring: Led the initial project to refactor legacy alert definitions, reducing case volume by nearly 50%"
+            ]
+        },
+        {
+            "role": "Senior Escalation Engineer & Technical Lead",
+            "company": "Pure Storage",
+            "duration": "April 2013 - Oct 2020",
+            "location": "Lehi, UT",
+            "description": "Founding member of the Utah support center. Progressed from Frontline Support to Escalation Manager, serving as the final technical backstop for critical customer issues.",
+            "highlights": [
+                "Elite Recognition: Inducted into the 'Pure Performers Club' in 2015, an award given to only ~2% of the organization for outstanding impact.",
+                "Crisis Management: Managed high-stakes escalations for enterprise customers, troubleshooting complex SAN/NAS interoperability issues.",
+                "Mentorship: Served as a technical anchor, training dozens of new engineers on storage protocols (FC, iSCSI) and Linux debugging."
+            ]
         },
         {
             "role": "Senior Storage Support Engineer",
             "company": "NetApp",
-            "duration": "January 2011 - April 2013",
+            "duration": "Jan 2011 - April 2013",
             "location": "Orem, UT",
+            "description": "Senior technical resource providing expert diagnostics for enterprise storage systems.",
             "highlights": [
-                "Acted as Duty Manager for high-priority escalations, effectively managing critical incidents (Major Incident Management).",
-                "Mastered complex enterprise protocols (NAS, SAN) and infrastructure, providing the technical context necessary for robust ITOM implementations."
-            ],
-            "description": "Senior technical resource providing expert diagnostics and workflow guidance. Developed a deep understanding of enterprise incident lifecycle management, serving as a foundation for future ITSM development."
+                "Escalation Duty: Acted as Duty Manager for high-priority incidents, coordinating resources to resolve critical outages.",
+                "Protocol Expertise: Mastered enterprise protocols (NFS, CIFS, iSCSI, FC) and mixed-environment troubleshooting (VMware, Windows, Linux)."
+            ]
         },
         {
             "role": "Tier 3 Technical Support Supervisor",
             "company": "Teleperformance USA",
-            "duration": "January 2009 - January 2011",
+            "duration": "Jan 2009 - Jan 2011",
             "location": "Lindon, UT",
+            "description": "Managed technical support teams for fiber optic services (Verizon FiOS).",
             "highlights": [
-                "Oversaw escalation processes and team performance, developing early expertise in Service Level Management and Customer Service Management (CSM) principles."
-            ],
-            "description": "Managed technical support teams and escalation workflows. Focused on service delivery excellence and SLA management."
+                "Leadership: Oversaw escalation processes and team performance for both onsite and remote employees.",
+                "Service Excellence: Focused on de-escalating difficult customer situations and restoring confidence in service delivery."
+            ]
         }
     ],
     "skills": [
-        "ServiceNow Development",
-        "JavaScript (Glide API)",
-        "Flow Designer",
-        "Business Rules",
-        "ITSM",
-        "ITOM",
-        "CSM",
-        "Service Portal",
-        "REST/SOAP Integrations",
-        "Workflow Automation",
-        "Python",
-        "SQL",
-        "AWS",
-        "Kubernetes",
-        "Docker",
-        "Enterprise Storage (NFS, iSCSI, FC)",
-        "Linux/Unix Administration"
+        "Enterprise Storage (SAN/NAS)",
+        "ServiceNow (ITSM, CSM, ITOM)",
+        "Linux & Unix Administration",
+        "Technical Leadership",
+        "System Architecture",
+        "JavaScript & Glide API",
+        "Project Management",
+        "Python & Automation",
+        "Containerization (Docker, K8s)"
     ],
     "certifications": [
-        "Pure Storage Certified Professional",
-        "Pure Storage FlashArray Architect Professional",
-        "Agile Foundations",
-        "Learning Data Analytics",
-        "Product Management: Building a Product Roadmap",
-        "SQL Essential Training",
-        "Artificial Intelligence Foundations: Machine Learning"
+        "ServiceNow Certified System Administrator",
+        "ITIL Foundations Certification",
+        "Learning Threat Modeling for Security Professionals",
+        "Pure Storage Certified Professional"
     ],
     "education": [
         {
-            "degree": "High School Diploma - 3.7 GPA",
-            "duration": "January 2006 - December 2008",
+            "degree": "High School Diploma",
+            "duration": "2006 - 2008",
             "institution": "Penn Foster High School"
         }
-    ],
-    "links": {
-        "linkedin": "https://www.linkedin.com/in/kelvinbward/"
-    }
+    ]
 }
