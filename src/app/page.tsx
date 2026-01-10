@@ -16,7 +16,7 @@ export default function Home() {
             SYSTEM ONLINE
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white">
-            Kelvin <span className="text-[#8b949e]">B.</span> Ward
+            Kelvin B. Ward
           </h1>
           <p className="text-lg md:text-xl text-[#8b949e] max-w-2xl mx-auto">
             Federated System Hub
