@@ -27,11 +27,12 @@ After completing ANY task within an individual project folder, you MUST:
 - **Consistency**: Container names must use suffix `-1` (e.g., `shared-cms-1`).
 
 ## 🌳 Git Branching & Workflow
-1. **Never commit directly to `main`**.
-2. **Always create a feature branch** using the prefix `feature/`, `fix/`, or `infra/`.
-3. **Draft Pull Requests**: When starting a task, create a draft PR immediately to track progress.
-4. **Clean History**: Use `git commit --amend` for small fixes during development and `git rebase main` before final merge.
-5. **Post-Merge**: Delete the feature branch once it is merged into `main`.
+1.  **NEVER commit directly to `main`**. Main is protected and direct pushes are forbidden.
+2.  **Infrastructure Gatekeeping**: All infrastructure changes (conf, docker, workflows) require a PR and manual approval from @kelvinbward.
+3.  **Always create a feature branch** using the prefix `feature/`, `fix/`, or `infra/`.
+4.  **Draft Pull Requests**: When starting a task, create a draft PR immediately to track progress.
+5.  **Clean History**: Use `git commit --amend` for small fixes during development and `git rebase main` before final merge.
+6.  **Post-Merge**: Delete the feature branch once it is merged into `main`.
 
 ## 🔗 Dependencies
 - **Upstream**: None per se, but coordinates all others.
