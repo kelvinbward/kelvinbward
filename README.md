@@ -72,14 +72,11 @@ This Hub supports multiple modes of operation to ensure flexibility across devel
 | **Static** | `npm run build` | GitHub Pages deployment (Static HTML Export). |
 
 ### Bootstrap Your Own Private Cloud
-To run the full "Cluster Mode", you must first bootstrap the shared infrastructure:
-```bash
-# Clone the infrastructure config
-git clone https://github.com/kelvinbward/pi-cluster-configs ../pi-cluster-configs
+To run the full "Cluster Mode", you can bootstrap a fresh `pi-cluster-configs` setup matching the production architecture:
 
-# Start the Gateway and Database
-cd ../pi-cluster-configs
-docker compose up -d
+```bash
+# Initialize infrastructure
+./scripts/init_infra.sh
 ```
 
 ## 🛡️ Security & Governance
@@ -87,5 +84,9 @@ docker compose up -d
 The integrity of this ecosystem is maintained through a "Defense in Depth" strategy.
 
 *   **Code Ownership**: Critical infrastructure files are protected by `CODEOWNERS`.
-*   **Agent Protocol**: All automated agents must strictly follow [AGENTS.md](./AGENTS.md).
+*   **Agent Protocol**: All automated agents must strictly follow [AGENTS.md](./AGENTS.md), including:
+    *   **Branch Naming**: `feature/`, `fix/`, `infra/`.
+    *   **PR Generation**: Agents must currently generate local branches for review.
+    *   **Cleanup**: Automatic deletion of slate environment branches.
 *   **Branch Protection**: Direct pushes to `main` are restricted. All changes require PRs with passing build checks.
+*   **Secret Management**: No secrets in repo. Environment variables managed via `pi-cluster-configs`.
