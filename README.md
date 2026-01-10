@@ -39,13 +39,14 @@ graph TD
     %% Relationships
     KBW -.->|Hosts| RES
     KBW -.->|Links to| GOOB
+    GOOB -.->|Links to| CAJS["creativeAudioJS"]
     
     classDef pro stroke:#2ea043,stroke-width:2px,fill:#2ea0431a;
     classDef creative stroke:#db6d28,stroke-width:2px,fill:#db6d281a;
     classDef infra stroke:#8b949e,stroke-width:2px,fill:#8b949e1a,stroke-dasharray: 5 5;
 
     class KBW,RES pro;
-    class GOOB creative;
+    class GOOB,CAJS creative;
     class PCC,WG,DB infra;
 ```
 
@@ -56,6 +57,7 @@ graph TD
 | **[kelvinbward](https://github.com/kelvinbward/kelvinbward)** | Next.js / TypeScript | **Professional Hub**. The entry point and engineering blog. | - |
 | **[resume](https://github.com/kelvinbward/resume)** | Vue.js / Node.js | **Professional App**. Interactive resume application. | [Live](https://www.kelvinbward.com/resume/) |
 | **[goobface](https://github.com/kelvinbward/goobface)** | Astro / Phaser | **Creative Hub**. Game showcase & 3D printing blog. | [Live](https://www.goobface.com) |
+| **[creativeAudioJS](https://github.com/kelvinbward/creativeAudioJS)** | Vanilla JS / Tone.js | **Experiment**. Audio synthesis playground (Referenced by Goobface). | [Demo](https://kelvinbward.github.io/creativeAudioJS) |
 | **[pi-cluster-configs](https://github.com/kelvinbward/pi-cluster-configs)** | Ansible / Docker | **Engine Room**. Infrastructure configuration. | Internal |
 
 ## 🚀 Execution Modes
