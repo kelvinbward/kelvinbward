@@ -64,6 +64,36 @@ graph TD
 | **[goobface](https://github.com/kelvinbward/goobface)** | Public | **Creative Node**. Game showcase & 3D printing blog. | [Live](https://www.goobface.com) |
 | **[creativeAudioJS](https://github.com/kelvinbward/creativeAudioJS)** | Public | **Experiment Node**. Audio synthesis playground. | [Demo](https://kelvinbward.github.io/creativeAudioJS) |
 | **[pi-cluster-configs](https://github.com/kelvinbward/pi-cluster-configs)** | Private | **Engine Room**. Infrastructure configuration (Nginx, DB). | Internal |
+66: | **[pi-cluster-configs](https://github.com/kelvinbward/pi-cluster-configs)** | Private | **Engine Room**. Infrastructure configuration (Nginx, DB). | Internal |
+
+## 🛡️ Security & Governance
+
+The integrity of this ecosystem is maintained through a "Defense in Depth" strategy, specifically tailored for a GitHub Free Tier environment.
+
+### 1. Code Ownership
+Critical infrastructure files (`/AGENTS.md`, `/docker-compose*`, `/.github/`, `/nginx/`) are protected by **CODEOWNERS**. Any changes to these locations require manual review.
+
+### 2. Automated Gatekeepers
+Every Pull Request triggers the `action-gatekeeper` workflow, which:
+*   Validates docker-compose configurations.
+*   Ensures protocol adherence (checking for `AGENTS.md`).
+*   Prevents regressions in critical paths.
+
+### 3. Branch Protection Strategy
+*   **Public Repositories**: Standard GitHub Branch Protection Rules deny direct pushes to `main`.
+*   **Private Repository (`pi-cluster-configs`)**: Since Free Tier lacks private branch protection:
+    *   **Client-Side**: Agents install mandatory `pre-push` hooks.
+    *   **Server-Side**: A custom `Main Branch Guard` workflow audits every push to `main` and fails if the actor is not the Owner, alerting on unauthorized access.
+
+## 🧩 Hybrid-Mono Design Pattern
+
+This architecture implements a **"Page-as-Repo"** philosophy, combining the isolation of Polyrepos with the unified experience of a Monorepo.
+
+*   **Isolation**: Each "function" (Professional Resume, Game Sandbox) lives in its own repository. This enforces strict boundaries and allows entirely independent tech stacks (Vue.js vs Astro) without dependency conflict.
+*   **Aggregation**: The `kelvinbward` System Hub acts as the "Monolithic Frontend". It aggregates the independent builds via GitHub Actions—pulling artifacts from child nodes and deploying them to subpaths (e.g., `/resume/`).
+*   **Outcome**:
+    *   **DevX**: Focus on one repository at a time.
+    *   **UserX**: Seamless navigation across a single domain (`kelvinbward.com`).
 
 ## 🌐 Deployment & Domain Strategy
 This architecture uses a **"Hybrid-Mono"** deployment model where `kelvinbward` acts as the single public entry point.
