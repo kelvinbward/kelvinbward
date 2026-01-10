@@ -1,0 +1,87 @@
+{
+    "id": 1,
+    "name": "Kelvin Ward",
+    "title": "Senior ServiceNow Developer",
+    "contact": {
+        "email": "kelvinbward@gmail.com",
+        "phone": "(801) 921-2766",
+        "location": "Lehi, UT"
+    },
+    "objective": "To leverage over 15 years of enterprise technical experience and deep expertise in ServiceNow development to architect scalable ITSM and ITOM solutions. Seeking a Senior Developer role to drive process automation, enhance user experience, and deliver high-value business outcomes.",
+    "about": "Senior ServiceNow Developer with a strong foundation in enterprise storage and support engineering. Expert in translating complex business requirements into efficient ServiceNow solutions. Proven track record of building custom applications, optimizing alert management workflows (ITOM), and reducing operational costs through automation. Adept at cross-functional collaboration to streamline support operations.",
+    "experience": [
+        {
+            "role": "Technical Project Manager & ServiceNow Developer",
+            "company": "Pure Storage",
+            "duration": "April 2013 - Present",
+            "location": "Lehi, UT",
+            "highlights": [
+                "**ServiceNow Development**: Architected and developed a custom ServiceNow ticketing application for the SE CoE, centralizing case management and improving response times.",
+                "**ITOM & Event Management**: Led the refactoring of system alert infrastructure, integrating monitoring tools with ServiceNow to automate incident creation and routing.",
+                "**Process Automation**: Created cross-team workflows using Flow Designer and Business Rules to automate alert deployment, reducing manual overhead and deployment errors.",
+                "**Impact**: Achieved a $30k/month reduction in operational costs and reduced alert case volume by 50% through intelligent noise reduction and workflow optimization.",
+                "**Roles**: Progressed from Frontline Support to Engineering Manager, gaining comprehensive insight into the ITSM lifecycle needed to build effective support tools."
+            ],
+            "description": "Lead developer for internal support workflow tools and alert management systems. Leveraging deep domain knowledge to build custom ServiceNow applications that streamline operations for the Systems Engineering CoE."
+        },
+        {
+            "role": "Senior Storage Support Engineer",
+            "company": "NetApp",
+            "duration": "January 2011 - April 2013",
+            "location": "Orem, UT",
+            "highlights": [
+                "Acted as Duty Manager for high-priority escalations, effectively managing critical incidents (Major Incident Management).",
+                "Mastered complex enterprise protocols (NAS, SAN) and infrastructure, providing the technical context necessary for robust ITOM implementations."
+            ],
+            "description": "Senior technical resource providing expert diagnostics and workflow guidance. Developed a deep understanding of enterprise incident lifecycle management, serving as a foundation for future ITSM development."
+        },
+        {
+            "role": "Tier 3 Technical Support Supervisor",
+            "company": "Teleperformance USA",
+            "duration": "January 2009 - January 2011",
+            "location": "Lindon, UT",
+            "highlights": [
+                "Oversaw escalation processes and team performance, developing early expertise in Service Level Management and Customer Service Management (CSM) principles."
+            ],
+            "description": "Managed technical support teams and escalation workflows. Focused on service delivery excellence and SLA management."
+        }
+    ],
+    "skills": [
+        "ServiceNow Development",
+        "JavaScript (Glide API)",
+        "Flow Designer",
+        "Business Rules",
+        "ITSM",
+        "ITOM",
+        "CSM",
+        "Service Portal",
+        "REST/SOAP Integrations",
+        "Workflow Automation",
+        "Python",
+        "SQL",
+        "AWS",
+        "Kubernetes",
+        "Docker",
+        "Enterprise Storage (NFS, iSCSI, FC)",
+        "Linux/Unix Administration"
+    ],
+    "certifications": [
+        "Pure Storage Certified Professional",
+        "Pure Storage FlashArray Architect Professional",
+        "Agile Foundations",
+        "Learning Data Analytics",
+        "Product Management: Building a Product Roadmap",
+        "SQL Essential Training",
+        "Artificial Intelligence Foundations: Machine Learning"
+    ],
+    "education": [
+        {
+            "degree": "High School Diploma - 3.7 GPA",
+            "duration": "January 2006 - December 2008",
+            "institution": "Penn Foster High School"
+        }
+    ],
+    "links": {
+        "linkedin": "https://www.linkedin.com/in/kelvinbward/"
+    }
+}
