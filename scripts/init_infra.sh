@@ -201,7 +201,9 @@ create_proxy_host() {
 
 # 3. Create Proxy Hosts
 create_proxy_host "resume.localhost" "resume-frontend-1" 80
-create_proxy_host "cms.localhost" "shared-cms" 8055
+create_proxy_host "cms.localhost" "shared-cms-1" 8055
+create_proxy_host "audio.localhost" "creativeaudio-app-1" 5173
+create_proxy_host "goobface.localhost" "goobface-app-1" 4321
 
 echo "✨ Gateway configuration complete."
 EOF
