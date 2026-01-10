@@ -25,7 +25,6 @@ export default function Home() {
 
         {/* Bento Grid Command Center */}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 w-full h-full md:h-[500px] animate-fade-in [animation-delay:150ms]">
-<<<<<<< HEAD
 
           {/* PROFESSIONAL HUB - Large Card (Span 4) */}
           <a
@@ -59,41 +58,6 @@ export default function Home() {
             </div>
           </a>
 
-=======
-
-          {/* PROFESSIONAL HUB - Large Card (Span 4) */}
-          <Link
-            href="/resume/"
-            className="group relative md:col-span-4 rounded-2xl border border-[#30363d] bg-[#161b22] p-8 flex flex-col justify-between overflow-hidden hover:border-orange-500/50 transition-all duration-300"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-            <div className="relative z-10 flex items-start justify-between">
-              <div className="p-3 rounded-lg bg-orange-500/10 text-orange-400 group-hover:text-orange-300 group-hover:bg-orange-500/20 transition-colors">
-                <Briefcase size={32} />
-              </div>
-              <div className="px-3 py-1 rounded-full bg-[#0d1117] border border-[#30363d] text-xs text-[#8b949e] font-mono">
-                PRO_ZONE
-              </div>
-            </div>
-
-            <div className="relative z-10 text-left mt-8">
-              <h2 className="text-3xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">
-                Professional Hub
-              </h2>
-              <p className="text-[#8b949e] mb-6 max-w-md group-hover:text-[#c9d1d9] transition-colors">
-                Full-Stack Engineering & Technical Leadership.
-                Specializing in ServiceNow, Enterprise Architecture, and Next.js.
-              </p>
-
-              <div className="flex gap-2">
-                <span className="px-2 py-1 rounded text-xs bg-[#0d1117] border border-[#30363d] text-orange-400/80">Interactive Resume</span>
-                <span className="px-2 py-1 rounded text-xs bg-[#0d1117] border border-[#30363d] text-orange-400/80">Case Studies</span>
-              </div>
-            </div>
-          </Link>
-
->>>>>>> main
           {/* CREATIVE HUB (GOOBFACE) - Tall Card (Span 2) */}
           <a
             href="https://www.goobface.com"
