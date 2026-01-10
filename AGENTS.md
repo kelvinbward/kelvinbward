@@ -7,10 +7,10 @@
 
 ## 📂 Project Map & Structure
 - **`pi-cluster-configs/`**: (Private) The "Engine Room". Contains Nginx Proxy Manager, shared PostgreSQL, and global network definitions.
-- **`resume/`**: (Public) Full-stack application. Depends on `pi-cluster-configs` for DB and Gateway routing.
-- **`creativeAudioJS/`**: (Private) Generative audio experiments using Tone.js and Vite.
-- **`goobface/`**: (Public) Hybrid Game & Hobby Node. Astro/Phaser/Three.js showcase.
-- **`kelvinbward/`**: (Public) Personal profile/showcase repository that documents this architecture.
+- **`resume/`**: (Public) Full-stack application. **Deployed to Hub** (`kelvinbward.com/resume/`).
+- **`creativeAudioJS/`**: (Private) Generative audio experiments.
+- **`goobface/`**: (Public) Hybrid Game & Hobby Node. **Standalone** (`goobface.com`).
+- **`kelvinbward/`**: (Public) **System Hub**. Hosts the central landing page and the Resume module.
 
 ## 🔄 Self-Documentation Protocol (CRITICAL)
 After completing ANY task within an individual project folder, you MUST:
