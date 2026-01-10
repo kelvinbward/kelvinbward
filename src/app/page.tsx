@@ -44,16 +44,15 @@ export default function Home() {
 
             <div className="relative z-10 text-left mt-8">
               <h2 className="text-3xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">
-                Professional Hub
+                Professional Resume
               </h2>
               <p className="text-[#8b949e] mb-6 max-w-md group-hover:text-[#c9d1d9] transition-colors">
                 Full-Stack Engineering & Technical Leadership.
-                Specializing in ServiceNow, Enterprise Architecture, and Next.js.
+                Specializing in ServiceNow, Enterprise Architecture, and Storage.
               </p>
 
               <div className="flex gap-2">
-                <span className="px-2 py-1 rounded text-xs bg-[#0d1117] border border-[#30363d] text-orange-400/80">Interactive Resume</span>
-                <span className="px-2 py-1 rounded text-xs bg-[#0d1117] border border-[#30363d] text-orange-400/80">Case Studies</span>
+                <span className="px-2 py-1 rounded text-xs bg-[#0d1117] border border-[#30363d] text-orange-400/80">AI Enthusiast & Enthusiast of All Things Tech.</span>
               </div>
             </div>
           </a>
