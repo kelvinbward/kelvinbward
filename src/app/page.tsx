@@ -27,8 +27,8 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 w-full h-full md:h-[500px] animate-fade-in [animation-delay:150ms]">
 
           {/* PROFESSIONAL HUB - Large Card (Span 4) */}
-          <Link
-            href="/resume/"
+          <a
+            href="/resume/index.html"
             className="group relative md:col-span-4 rounded-2xl border border-[#30363d] bg-[#161b22] p-8 flex flex-col justify-between overflow-hidden hover:border-orange-500/50 transition-all duration-300"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -56,7 +56,7 @@ export default function Home() {
                 <span className="px-2 py-1 rounded text-xs bg-[#0d1117] border border-[#30363d] text-orange-400/80">Case Studies</span>
               </div>
             </div>
-          </Link>
+          </a>
 
           {/* CREATIVE HUB (GOOBFACE) - Tall Card (Span 2) */}
           <a
