@@ -10,7 +10,7 @@ export type Post = {
         title: string
         date: string
         description: string
-        [key: string]: any
+        [key: string]: unknown
     }
     content: string
 }

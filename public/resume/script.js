@@ -8,21 +8,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // For GitHub Pages (hostname ends in .github.io), we use resume.json
 
     const isGithubPages = window.location.hostname.includes('github.io') || window.location.hostname.includes('kelvinbward.com');
-    const apiUrl = isGithubPages ? 'resume.json' : '/api/resume';
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            renderHeader(data);
-            renderObjective(data);
-            renderAbout(data);
-            renderExperience(data);
-            renderSkills(data);
-            renderCertifications(data);
-            renderEducation(data);
-            renderFooter();
-        })
-        .catch(error => console.error('Error loading resume metadata:', error));
+    const renderResume = (data) => {
+        renderHeader(data);
+        renderObjective(data);
+        renderAbout(data);
+        renderExperience(data);
+        renderSkills(data);
+        renderCertifications(data);
+        renderEducation(data);
+        renderFooter();
+    };
+
+    if (isGithubPages) {
+        fetch('resume.json')
+            .then(response => response.json())
+            .then(renderResume)
+            .catch(error => console.error('Error loading static resume:', error));
+    } else {
+        // Try API first, fallback to static JSON
+        fetch('/api/resume')
+            .then(response => {
+                if (!response.ok) throw new Error('API unavailable');
+                return response.json();
+            })
+            .then(renderResume)
+            .catch(() => {
+                console.log('API unavailable, falling back to static resume.json');
+                fetch('resume.json')
+                    .then(response => response.json())
+                    .then(renderResume)
+                    .catch(error => console.error('Error loading fallback resume:', error));
+            });
+    }
 });
 
 function renderHeader(data) {
