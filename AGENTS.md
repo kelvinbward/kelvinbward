@@ -46,8 +46,9 @@ fi' > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 - **`pi-cluster-configs/`**: (Private) The "Engine Room". Contains Nginx Proxy Manager, shared PostgreSQL, and global network definitions.
 - **`resume/`**: (Public) Full-stack application. **Deployed to Hub** (`kelvinbward.com/resume/`).
 - **`creativeAudioJS/`**: (Private) Generative audio experiments.
-- **`goobface/`**: (Public) Hybrid Game & Hobby Node. **Standalone** (`goobface.com`).
-- **`kelvinbward/`**: (Public) **System Hub**. Hosts the central landing page and the Resume module.
+- **`Goobface/`: (Public)`apps/goobface` (Game/Blog Platform)
+- **`Middleware/`: (Public Repo/Private Access)`apps/middleware` (Python Backend API)
+- **`kelvinbward/`: (Public) **System Hub**. Hosts the central landing page and the Resume module.
 
 ## 🔄 Self-Documentation Protocol (CRITICAL)
 After completing ANY task within an individual project folder, you MUST:
