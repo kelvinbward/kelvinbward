@@ -28,13 +28,15 @@ graph TD
     subgraph Infrastructure["Shared Private Cloud"]
         PCC[pi-cluster-configs]
         WG["Web Gateway"]
+        MID["middleware (API)"]
         DB[(Shared PostgreSQL)]
     end
 
     %% Network Connections
-    KBW -->|Connects to| DB
-    RES -->|Connects to| DB
-    GOOB -->|Connects to| DB
+    KBW -->|Connects to| MID
+    RES -->|Connects to| MID
+    GOOB -->|Connects to| MID
+    MID -->|Connects to| DB
     
     %% Relationships
     KBW -.->|Hosts| RES
@@ -47,7 +49,7 @@ graph TD
 
     class KBW,RES pro;
     class GOOB,CAJS creative;
-    class PCC,WG,DB infra;
+    class PCC,WG,MID,DB infra;
 ```
 
 ## 📚 Repository Map
@@ -55,7 +57,8 @@ graph TD
 | Repository | Tech Stack | Role | Status |
 | :--- | :--- | :--- | :--- |
 | **[kelvinbward](https://github.com/kelvinbward/kelvinbward)** | Next.js / TypeScript | **Professional Hub**. The entry point and engineering blog. | - |
-| **[resume](https://github.com/kelvinbward/resume)** | Vue.js / Node.js | **Professional App**. Interactive resume application. | [Live](https://www.kelvinbward.com/resume/) |
+| **[resume](https://github.com/kelvinbward/resume)** | Vue.js / FastAPI | **Professional App**. Interactive resume application. | [Live](https://www.kelvinbward.com/resume/) |
+| **[middleware](https://github.com/kelvinbward/middleware)** | Python / FastAPI | **System Bridge**. API layer between DB and Frontends. | - |
 | **[goobface](https://github.com/kelvinbward/goobface)** | Astro / Phaser | **Creative Hub**. Game showcase & 3D printing blog. | [Live](https://www.goobface.com) |
 | **[creativeAudioJS](https://github.com/kelvinbward/creativeAudioJS)** | Vanilla JS / Tone.js | **Experiment**. Audio synthesis playground (Referenced by Goobface). | [Demo](https://kelvinbward.github.io/creativeAudioJS) |
 | **[pi-cluster-configs](https://github.com/kelvinbward/pi-cluster-configs)** | Ansible / Docker | **Engine Room**. Infrastructure configuration. | Internal |
