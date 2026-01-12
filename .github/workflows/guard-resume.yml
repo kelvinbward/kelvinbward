@@ -9,7 +9,18 @@ jobs:
   check-readonly:
     runs-on: ubuntu-latest
     steps:
+      - name: Check for Automation Bypass
+        id: check-bypass
+        run: |
+          if [[ "${{ github.actor }}" == "github-actions[bot]" ]] || [[ "${{ github.head_ref }}" == "deploy/resume-update" ]]; then
+            echo "✅ Automation detected (Actor: ${{ github.actor }}, Branch: ${{ github.head_ref }}). Bypassing guard."
+            echo "bypass=true" >> $GITHUB_OUTPUT
+          else
+            echo "bypass=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Fail if manual changes detected in distribution folder
+        if: steps.check-bypass.outputs.bypass != 'true'
         run: |
           echo "❌ ERROR: You are attempting to modify 'public/resume/', which is a read-only distribution target."
           echo "   Please update the source of truth in the 'kelvinbward/resume' repository instead."
