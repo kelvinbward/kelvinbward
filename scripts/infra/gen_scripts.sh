@@ -204,7 +204,24 @@ docker compose up -d
 cd "$SCRIPT_DIR"
 
 echo "Starting Middleware API..."
-cd "$SCRIPT_DIR/apps/middleware"
+MIDDLEWARE_DIR="$SCRIPT_DIR/apps/middleware"
+
+# Ensure repo is present
+if [ ! -d "$MIDDLEWARE_DIR/.git" ]; then
+    echo "   📦 Cloning Middleware repository..."
+    # If directory exists and is empty, clone works. If not empty, it fails.
+    # Scaffold ensures it exists.
+    if [ -z "$(ls -A $MIDDLEWARE_DIR 2>/dev/null)" ]; then
+        git clone https://github.com/kelvinbward/middleware.git "$MIDDLEWARE_DIR"
+    else
+        echo "   ⚠️  Directory not empty but no .git found. Skipping clone."
+    fi
+else
+    echo "   🔄 Updating Middleware repository..."
+    cd "$MIDDLEWARE_DIR" && git pull && cd "$SCRIPT_DIR"
+fi
+
+cd "$MIDDLEWARE_DIR"
 if [ ! -f .env ]; then
     echo "Warning: .env file not found. Copying from .env.template..."
     cp .env.template .env
