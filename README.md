@@ -93,3 +93,22 @@ The integrity of this ecosystem is maintained through a "Defense in Depth" strat
     *   **Cleanup**: Automatic deletion of slate environment branches.
 *   **Branch Protection**: Direct pushes to `main` are restricted. All changes require PRs with passing build checks.
 *   **Secret Management**: No secrets in repo. Environment variables managed via `pi-cluster-configs`.
+
+## 🧠 Architectural Decisions
+
+### Pattern: Hybrid-Mono Repository
+This ecosystem uses a **Hybrid-Mono** pattern to balance Open Source portfolio constraints with production security.
+
+-   **Public Repositories** (`middleware`, `resume`):
+    -   Serve as "Products".
+    -   Contain source code, tests, and standard Dockerfiles.
+    -   **Goal**: Demonstrate engineering capability publicly.
+    
+-   **Private Repository** (`pi-cluster-configs`):
+    -   Serves as the "Environment".
+    -   Contains orchestrator scripts (`setup.sh`), secrets (`.env`), and runtime configuration.
+    -   **Goal**: Securely manage deployment logic.
+
+-   **The Bridge**:
+    -   The `setup.sh` orchestrator **clones** public repositories into the private infrastructure.
+    -   This effectively treats public repos as dynamic "modules" managed via script, maintaining clear separation of source (public) and state (private).
