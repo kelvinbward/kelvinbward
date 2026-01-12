@@ -1,0 +1,17 @@
+name: Read-Only Guard
+
+on:
+  pull_request:
+    paths:
+      - 'public/resume/**'
+
+jobs:
+  check-readonly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if manual changes detected in distribution folder
+        run: |
+          echo "❌ ERROR: You are attempting to modify 'public/resume/', which is a read-only distribution target."
+          echo "   Please update the source of truth in the 'kelvinbward/resume' repository instead."
+          echo "   Changes made here will be overwritten by the next deployment."
+          exit 1
