@@ -203,6 +203,29 @@ cd "$SCRIPT_DIR/core-services"
 docker compose up -d
 cd "$SCRIPT_DIR"
 
+    # --- KelvinBward Hub ---
+echo "   Checking 'kelvinbward'..."
+if [ ! -d "apps/kelvinbward" ]; then
+    echo "   Cloning kelvinbward..."
+    git clone https://github.com/kelvinbward/kelvinbward.git apps/kelvinbward
+else
+    echo "   Pulling latest kelvinbward..."
+    cd apps/kelvinbward && git pull && cd ../..
+fi
+ 
+echo "   Starting kelvinbward..."
+cd apps/kelvinbward
+if [ ! -f .env ]; then
+    if [ -f .env.template ]; then
+       cp .env.template .env
+    else
+       touch .env
+    fi
+fi
+docker compose up -d
+cd ../..
+
+# --- Middleware ---
 echo "Starting Middleware API..."
 MIDDLEWARE_DIR="$SCRIPT_DIR/apps/middleware"
 

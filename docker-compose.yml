@@ -1,7 +1,7 @@
 services:
-  kelvinbward-hub:
+  app:
     build: .
-    container_name: kelvinbward-hub
+    container_name: kelvinbward-app-1
     restart: unless-stopped
     networks:
       - web_gateway
