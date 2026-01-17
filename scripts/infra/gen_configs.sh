@@ -41,33 +41,71 @@ version: '3.8'
 services:
   db:
     image: postgres:15-alpine
+    container_name: resume-db-1
     restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: resume_db
+      - POSTGRES_USER=\${POSTGRES_USER}
+      - POSTGRES_PASSWORD=\${POSTGRES_PASSWORD}
+      - POSTGRES_DB=resume_db
+    expose:
+      - "5432"
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - web_gateway
 
   cms:
     image: directus/directus:latest
+    container_name: shared-cms-1
     restart: unless-stopped
     environment:
-      KEY: 'secret-key-replace-me'
-      SECRET: 'secret-key-replace-me'
-      ADMIN_EMAIL: 'admin@example.com'
-      ADMIN_PASSWORD: 'password'
+      KEY: '\${CMS_KEY}'
+      SECRET: '\${CMS_SECRET}'
+      ADMIN_EMAIL: '\${CMS_ADMIN_EMAIL}'
+      ADMIN_PASSWORD: '\${CMS_ADMIN_PASSWORD}'
       DB_CLIENT: 'pg'
       DB_HOST: 'db'
       DB_PORT: '5432'
       DB_DATABASE: 'resume_db'
-      DB_USER: 'postgres'
-      DB_PASSWORD: 'password'
+      DB_USER: '\${POSTGRES_USER}'
+      DB_PASSWORD: '\${POSTGRES_PASSWORD}'
       PUBLIC_URL: 'http://cms.localhost'
     depends_on:
       - db
+    networks:
+      - web_gateway
+
+volumes:
+  postgres_data:
+
+
+networks:
+  web_gateway:
+    external: true
+EOF
+fi
+
+MGMT_COMPOSE="$TARGET_DIR/management/docker-compose.yml"
+if [ -f "$MGMT_COMPOSE" ]; then
+    echo "   ⚠️  Management config exists. Skipping."
+else
+    echo "   📝 Generating Management docker-compose.yml..."
+    cat <<EOF > "$MGMT_COMPOSE"
+version: '3.8'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer_management
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data:/data
+    ports:
+      - 9000:9000
     networks:
       - web_gateway
 

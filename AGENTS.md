@@ -43,7 +43,7 @@ fi' > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 2.  **System Root**: The central source of truth for the Polyrepo architecture (`kelvinbward/AGENTS.md`).
 
 ## 📂 Project Map & Structure
-- **`pi-cluster-configs/`**: (Private) The "Engine Room". Contains Nginx Proxy Manager, shared PostgreSQL, and global network definitions.
+- **`pi-cluster-configs/`**: (Private) The "Engine Room". Contains Nginx Proxy Manager, Portainer, shared PostgreSQL, and global network definitions.
 - **`resume/`**: (Public) Full-stack application. **Deployed to Hub** (`kelvinbward.com/resume/`).
 - **`creativeAudioJS/`**: (Private) Generative audio experiments.
 - **`Goobface/`: (Public)`apps/goobface` (Game/Blog Platform)
@@ -54,7 +54,8 @@ fi' > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 After completing ANY task within an individual project folder, you MUST:
 1.  **Update the local `AGENTS.md`** in that specific repository with any changes to ports, dependencies, or commands.
 2.  **Update this Root `AGENTS.md`** if the high-level structure, repository relationships, or global environment variables have changed.
-3.  **Summarize the "Next State"** so the user can resume work seamlessly.
+3.  **Update `scripts/init_infra.sh`** (and sub-scripts) if the infrastructure topology or setup steps change.
+4.  **Summarize the "Next State"** so the user can resume work seamlessly.
 
 ## 🛠 Shared Infrastructure Rules
 - **Network**: All apps connect via the `web_gateway` Docker network (External).
@@ -63,6 +64,12 @@ After completing ANY task within an individual project folder, you MUST:
     - **Standalone Mode (Dev)**: Use `docker-compose.standalone.yml`. Exposed ports allowed for isolated development.
 - **Routing**: Use `[app].localhost` subdomain routing via Nginx Proxy Manager.
 - **Consistency**: Container names must use suffix `-1` (e.g., `shared-cms-1`).
+
+## 🔐 Security Protocols
+1.  **No Hardcoded Secrets**: NEVER commit passwords or keys to git.
+2.  **Secret Generation**: Use the `generate_secrets.sh` script to create a local `secrets.env` file.
+3.  **Environment Variables**: All services must reference secrets via environment variables (e.g., `${POSTGRES_PASSWORD}`).
+4.  **Gitignore**: Ensure `secrets.env` and `config.env` are always ignored.
 
 ## 🌳 Git Branching & Workflow
 1.  **NEVER commit directly to `main`**. Main is protected and direct pushes are forbidden.
