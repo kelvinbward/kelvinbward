@@ -1,0 +1,6 @@
+# Application Feature Flags
+# Set these to 'true' to enable the corresponding application.
+# Set to 'false' to skip initialization.
+
+ENABLE_KELVINBWARD=true
+ENABLE_MIDDLEWARE=true
