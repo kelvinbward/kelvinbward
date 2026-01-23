@@ -12,56 +12,50 @@ Welcome to the central hub of my digital presence. This repository operates as a
 
 ---
 
-## 🏗 System Architecture
+## 🏗 System Architecture & Bootstrap Flow
 
-The ecosystem implements a **"Dual Hub" Federated Architecture**, allowing strict separation of concerns while sharing foundational infrastructure.
+The ecosystem follows a **Registry-Driven** bootstrap process. The `apps.config` registry acts as the single source of truth for all active modules.
 
 ```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': { 'lineColor': '#8b949e' }}}%%
 graph TD
-    subgraph Public["Public Zone"]
-        KBW["kelvinbward (PRO HUB)"]
-        GOOB["goobface (PERSONAL HUB)"]
-        RES["resume (App)"]
+    User([User / Agent]) -->|1. Runs| INIT[init_infra.sh]
+    
+    subgraph "Bootstrap Process"
+        INIT -->|Reads| REG[apps.config]
+        INIT -->|Installs| SETUP[setup.sh (Template)]
+        INIT -->|Scaffolds| DIRS[Directory Structure]
     end
     
-    subgraph Infrastructure["Shared Private Cloud"]
-        PCC[pi-cluster-configs]
-        WG["Web Gateway"]
-        MID["middleware (API)"]
-        DB[(Shared PostgreSQL)]
+    subgraph "Orchestration (setup.sh)"
+        SETUP -->|Iterates| REG
+        SETUP -->|Clones/Recovers| APPS[Public Repos (Modules)]
+        SETUP -->|Generates| ENV[.env Configs]
+        SETUP -->|Starts| DOCKER[Docker Compose Cluster]
     end
-
-    %% Network Connections
-    KBW -->|Connects to| MID
-    RES -->|Connects to| MID
-    GOOB -->|Connects to| MID
-    MID -->|Connects to| DB
     
-    %% Relationships
-    KBW -.->|Hosts| RES
-    KBW -.->|Links to| GOOB
-    GOOB -.->|Links to| CAJS["creativeAudioJS"]
-    
-    classDef pro stroke:#2ea043,stroke-width:2px,fill:#2ea0431a;
-    classDef creative stroke:#db6d28,stroke-width:2px,fill:#db6d281a;
-    classDef infra stroke:#8b949e,stroke-width:2px,fill:#8b949e1a,stroke-dasharray: 5 5;
-
-    class KBW,RES pro;
-    class GOOB,CAJS creative;
-    class PCC,WG,MID,DB infra;
+    subgraph "Runtime Traffic"
+        WEB[Web Client] -->|*.localhost| NPM[Nginx Gateway]
+        NPM -->|Route| APPS
+    end
 ```
 
-## 📚 Repository Map
+## 📡 Service Discovery & Registry
 
-| Repository | Tech Stack | Role | Status |
-| :--- | :--- | :--- | :--- |
-| **[kelvinbward](https://github.com/kelvinbward/kelvinbward)** | Next.js / TypeScript | **Professional Hub**. The entry point and engineering blog. | - |
-| **[resume](https://github.com/kelvinbward/resume)** | Vue.js / FastAPI | **Professional App**. Interactive resume application. | [Live](https://www.kelvinbward.com/resume/) |
-| **[middleware](https://github.com/kelvinbward/middleware)** | Python / FastAPI | **System Bridge**. API layer between DB and Frontends. | - |
-| **[goobface](https://github.com/kelvinbward/goobface)** | Astro / Phaser | **Creative Hub**. Game showcase & 3D printing blog. | [Live](https://www.goobface.com) |
-| **[creativeAudioJS](https://github.com/kelvinbward/creativeAudioJS)** | Vanilla JS / Tone.js | **Experiment**. Audio synthesis playground (Referenced by Goobface). | [Demo](https://kelvinbward.github.io/creativeAudioJS) |
-| **[pi-cluster-configs](https://github.com/kelvinbward/pi-cluster-configs)** | Ansible / Docker | **Engine Room**. Infrastructure configuration. | Internal |
+| Service | Internal Host | External Route | Health Check | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **Gateway** (NPM) | `gateway-app-1:81` | `http://<IP>:81` | `/health` | Internal |
+| **Portainer** | `portainer_management:9000` | `portainer.localhost` | `/` | Internal |
+| **Resume App** | `resume-frontend-1:80` | `resume.localhost` | `/health` | [Live](https://www.kelvinbward.com/resume/) |
+| **Goobface** | `goobface-app-1:4321` | `goobface.localhost` | `/` | [Live](https://www.goobface.com) |
+| **Middleware** | `middleware-app-1:5000` | `middleware.localhost` | `/api/health` | Active |
+| **PostgreSQL** | `resume-db-1:5432` | *(Internal Only)* | `pg_isready` | Active |
+
+## 🤖 Agent Hand-off
+**Starting a new task?**
+1.  **Read Protocol**: Review [AGENTS.md](./AGENTS.md) for the latest rules.
+2.  **Check Registry**: Inspect `apps.config` in `pi-cluster-configs` to understand active services.
+3.  **Branching**: Create `feature/<name>` or `fix/<name>`.
+4.  **Sync State**: Generate `STATE.md` before PR validation.
 
 ## 🚀 Execution Modes
 

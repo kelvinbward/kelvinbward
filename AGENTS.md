@@ -15,6 +15,26 @@ fi' > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 
 **Step 2:** Verify you are on a feature branch (e.g., `feature/task-name`) before writing code.
 
+## 🧭 Capability Matrix
+| Repository | Allowed Agent Scope | Prohibited Actions |
+| :--- | :--- | :--- |
+| **kelvinbward** (Hub) | `infra/*`, `docs/*` | Modifying `resume` sub-app code directly (treat as submodule) |
+| **pi-cluster-configs** | `setup`, `config`, `network` | Deleting production volumes |
+| **apps/goobface** | `frontend`, `game-logic` | Changing deployment ports without infra approval |
+| **apps/middleware** | `api`, `db-migration` | Hardcoding secrets |
+
+## 🔄 State-Sync Protocol (MANDATORY)
+At the end of **every** feature branch, you must generate a `STATE.md` in the root of the repo (gitignored or tracked, tracked preferred for PR context) containing:
+1.  **Technical Summary**: What changed?
+2.  **Dependency Changes**: New ports? New env vars?
+3.  **Resume Command**: The exact command the user should run to pick up where you left off.
+
+## ✅ Pre-PR Validation
+Before providing a PR link, you **MUST** run:
+1.  **Lint/Format Check** (if applicable).
+2.  **Config Validation**: `docker compose config` (if touching compose files).
+3.  **Self-Review**: Read your own diffs.
+
 ## 🤝 Collaborative Workflow
 **Role Definition**:
 *   **User (@kelvinbward)**: Senior Engineer / Owner. Has `admin` rights. Merges PRs.
