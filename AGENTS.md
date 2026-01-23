@@ -24,10 +24,13 @@ fi' > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 | **apps/middleware** | `api`, `db-migration` | Hardcoding secrets |
 
 ## 🔄 State-Sync Protocol (MANDATORY)
-At the end of **every** feature branch, you must generate a `STATE.md` in the root of the repo (gitignored or tracked, tracked preferred for PR context) containing:
-1.  **Technical Summary**: What changed?
-2.  **Dependency Changes**: New ports? New env vars?
-3.  **Resume Command**: The exact command the user should run to pick up where you left off.
+At the end of **every** feature branch, you must:
+1.  **Log Session**: Create a new file in `pi-cluster-configs/logs/sessions/YYYY-MM-DD_Task_Name.md` with:
+    *   **Technical Summary**: What changed?
+    *   **Dependency Changes**: New ports? New env vars?
+    *   **Resume Command**: How to resume?
+2.  **Update Global State**: Update `pi-cluster-configs/STATE.md` to reflect the current high-level state of the ecosystem.
+3.  **Commit Log**: Commit these changes to a branch in `pi-cluster-configs` (e.g., `infra/log-update-taskname`).
 
 ## ✅ Pre-PR Validation
 Before providing a PR link, you **MUST** run:
