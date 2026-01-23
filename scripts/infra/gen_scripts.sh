@@ -111,6 +111,22 @@ else
 EOF
 fi
 
+# --- 1.6 Apps Config Template ---
+APPS_CONFIG_TEMPLATE="$TARGET_DIR/apps.config"
+TEMPLATE_SOURCE="$(dirname "$0")/templates/apps.config.template"
+
+if [ -f "$APPS_CONFIG_TEMPLATE" ]; then
+    echo "   ⚠️  Apps Config exists. Skipping."
+else
+    echo "   📝 Copying Apps Config Template..."
+    if [ -f "$TEMPLATE_SOURCE" ]; then
+        cp "$TEMPLATE_SOURCE" "$APPS_CONFIG_TEMPLATE"
+        echo "      ✅ Copied apps.config"
+    else
+        echo "      ❌ Error: Template not found at $TEMPLATE_SOURCE"
+    fi
+fi
+
 # --- 2. Gateway Automation Script ---
 GATEWAY_SCRIPT="$TARGET_DIR/scripts/configure_gateway.sh"
 
@@ -330,117 +346,21 @@ EOF
 fi
 
 # --- 4. Setup Script ---
+# --- 4. Setup Script ---
 SETUP_SCRIPT="$TARGET_DIR/setup.sh"
+SETUP_TEMPLATE_SOURCE="$(dirname "$0")/templates/setup.sh"
+
 if [ -f "$SETUP_SCRIPT" ]; then
     echo "   ⚠️  Setup script exists. Skipping."
 else
-    echo "   📝 Generating setup.sh..."
-    cat <<'EOF' > "$SETUP_SCRIPT"
-#!/bin/bash
-set -e
-
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-if ! command_exists docker; then
-    echo "Error: Docker is not installed."
-    exit 1
-fi
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# 🔐 Load/Generate Secrets
-echo "🔐 Loading Secrets..."
-if [ -f "$SCRIPT_DIR/scripts/generate_secrets.sh" ]; then
-    "$SCRIPT_DIR/scripts/generate_secrets.sh"
-    source "$SCRIPT_DIR/secrets.env"
-else
-    echo "❌ Error: scripts/generate_secrets.sh not found."
-    exit 1
-fi
-
-if ! docker network ls | grep -q "web_gateway"; then
-    echo "Creating web_gateway network..."
-    docker network create web_gateway
-else
-    echo "web_gateway network already exists."
-fi
-
-echo "Starting Gateway..."
-cd "$SCRIPT_DIR/gateway"
-docker compose up -d
-cd "$SCRIPT_DIR"
-
-echo "Waiting for web_gateway network..."
-until docker network ls | grep -q "web_gateway"; do sleep 1; done
-
-echo "Starting Core Services (DB + CMS)..."
-cd "$SCRIPT_DIR/core-services"
-docker compose up -d
-cd "$SCRIPT_DIR"
-
-echo "Starting Management Services (Portainer)..."
-cd "$SCRIPT_DIR/management"
-docker compose up -d
-cd "$SCRIPT_DIR"
-
-    # --- KelvinBward Hub ---
-echo "   Checking 'kelvinbward'..."
-if [ ! -d "apps/kelvinbward" ]; then
-    echo "   Cloning kelvinbward..."
-    git clone https://github.com/kelvinbward/kelvinbward.git apps/kelvinbward
-else
-    echo "   Pulling latest kelvinbward..."
-    cd apps/kelvinbward && git pull && cd ../..
-fi
- 
-echo "   Starting kelvinbward..."
-cd apps/kelvinbward
-if [ ! -f .env ]; then
-    if [ -f .env.template ]; then
-       cp .env.template .env
+    echo "   📝 Installing setup.sh..."
+    if [ -f "$SETUP_TEMPLATE_SOURCE" ]; then
+        cp "$SETUP_TEMPLATE_SOURCE" "$SETUP_SCRIPT"
+        chmod +x "$SETUP_SCRIPT"
+        echo "      ✅ Installed setup.sh"
     else
-       touch .env
+         echo "      ❌ Error: Setup template not found at $SETUP_TEMPLATE_SOURCE"
+         # Fallback or exit?
+         exit 1
     fi
-fi
-docker compose up -d
-cd ../..
-
-# --- Middleware ---
-echo "Starting Middleware API..."
-MIDDLEWARE_DIR="$SCRIPT_DIR/apps/middleware"
-
-# Ensure repo is present
-if [ ! -d "$MIDDLEWARE_DIR/.git" ]; then
-    echo "   📦 Cloning Middleware repository..."
-    if [ -z "$(ls -A $MIDDLEWARE_DIR 2>/dev/null)" ]; then
-        git clone https://github.com/kelvinbward/middleware.git "$MIDDLEWARE_DIR"
-    else
-        echo "   ⚠️  Directory not empty but no .git found. Skipping clone."
-    fi
-else
-    echo "   🔄 Updating Middleware repository..."
-    cd "$MIDDLEWARE_DIR" && git pull && cd "$SCRIPT_DIR"
-fi
-
-cd "$MIDDLEWARE_DIR"
-if [ ! -f .env ]; then
-    echo "Warning: .env file not found. Copying from .env.template..."
-    cp .env.template .env
-fi
-docker compose up -d
-cd "$SCRIPT_DIR"
-
-echo "Infrastructure setup complete."
-echo "Nginx Proxy Manager should be available at http://<your-pi-ip>:81"
-
-echo "Running Gateway Auto-Configuration..."
-if [ -f "$SCRIPT_DIR/scripts/configure_gateway.sh" ]; then
-    "$SCRIPT_DIR/scripts/configure_gateway.sh"
-else
-    echo "Warning: scripts/configure_gateway.sh not found. Skipping auto-config."
-fi
-EOF
-    chmod +x "$SETUP_SCRIPT"
 fi
