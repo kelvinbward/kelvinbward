@@ -1,6 +1,23 @@
-# Application Feature Flags
-# Set these to 'true' to enable the corresponding application.
-# Set to 'false' to skip initialization.
+# Application Registry
+# This file defines the applications managed by the infrastructure.
+# Format: Bash Associative Array concept (simulated)
 
-ENABLE_KELVINBWARD=true
-ENABLE_MIDDLEWARE=true
+# List of Registered Applications (Uppercase Identifiers)
+REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE")
+
+# --- APP: KELVINBWARD ---
+APP_KELVINBWARD_ENABLED=true
+APP_KELVINBWARD_REPO="https://github.com/kelvinbward/kelvinbward.git"
+APP_KELVINBWARD_DIR="apps/kelvinbward"
+APP_KELVINBWARD_MODE="cluster"
+
+# --- APP: MIDDLEWARE ---
+APP_MIDDLEWARE_ENABLED=true
+APP_MIDDLEWARE_REPO="https://github.com/kelvinbward/middleware.git"
+APP_MIDDLEWARE_DIR="apps/middleware"
+APP_MIDDLEWARE_MODE="cluster"
+
+# --- FUTURE APPS ---
+# To add a new app:
+# 1. Add identifier to REGISTERED_APPS: ("OLD" "NEW")
+# 2. Define APP_NEW_ENABLED, APP_NEW_REPO, etc.

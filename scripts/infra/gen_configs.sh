@@ -114,3 +114,40 @@ networks:
     external: true
 EOF
 fi
+
+
+# Load Registry for Dynamic Env Templates
+CONFIG_FILE="$TARGET_DIR/apps.config"
+if [ -f "$CONFIG_FILE" ]; then
+    echo "   📚 Loading App Registry for Config Generation..."
+    source "$CONFIG_FILE"
+    
+    for APP_ID in "${REGISTERED_APPS[@]}"; do
+        VAR_ENABLED="APP_${APP_ID}_ENABLED"
+        VAR_DIR="APP_${APP_ID}_DIR"
+        
+        IS_ENABLED="${!VAR_ENABLED}"
+        TARGET_SUBDIR="${!VAR_DIR}"
+        FULL_PATH="$TARGET_DIR/$TARGET_SUBDIR"
+
+        if [ "$IS_ENABLED" = "true" ] && [ -d "$FULL_PATH" ]; then
+             echo "   ⚙️  Checking configs for $APP_ID..."
+             # Here we could generate specific .env templates if we knew the schema.
+             # For now, we ensure a base template exists if missing, or specific logic per app.
+             
+             TEMPLATE_FILE="$FULL_PATH/.env.template"
+             if [ ! -f "$TEMPLATE_FILE" ]; then
+                 echo "      📝 Generating default .env.template for $APP_ID..."
+                 # Generic fallback or specific logic based on APP_ID
+                 if [ "$APP_ID" == "MIDDLEWARE" ]; then
+                     echo "PORT=5000" > "$TEMPLATE_FILE"
+                     echo "DATABASE_URL=postgres://\${POSTGRES_USER}:\${POSTGRES_PASSWORD}@db:5432/middleware_db" >> "$TEMPLATE_FILE"
+                 elif [ "$APP_ID" == "KELVINBWARD" ]; then
+                      echo "NODE_ENV=production" > "$TEMPLATE_FILE"
+                 else
+                     echo "# Auto-generated template" > "$TEMPLATE_FILE"
+                 fi
+             fi
+        fi
+    done
+fi

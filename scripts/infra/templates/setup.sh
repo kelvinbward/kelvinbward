@@ -63,91 +63,77 @@ cd "$SCRIPT_DIR/management"
 docker compose up -d
 cd "$SCRIPT_DIR"
 
-# --- Kelvinbward Hub ---
-if [ "$ENABLE_KELVINBWARD" = "true" ]; then
-    echo "   Checking 'kelvinbward'..."
-    if [ ! -d "apps/kelvinbward/.git" ]; then
-        if [ ! -d "apps/kelvinbward" ]; then
-             echo "   Cloning kelvinbward..."
-             git clone https://github.com/kelvinbward/kelvinbward.git apps/kelvinbward
-        else
-             echo "   ⚠️  kelvinbward exists but no .git found. Recovering..."
-             cd apps/kelvinbward
-             git init
-             git remote add origin https://github.com/kelvinbward/kelvinbward.git
-             git fetch
-             if git checkout main -f; then
-                 echo "   ✅ Recovered repo."
-             else
-                 echo "   ❌ Recovery failed."
-                 exit 1
-             fi
-             cd ../..
-        fi
-    else
-        echo "   Pulling latest kelvinbward..."
-        cd apps/kelvinbward && git pull && cd ../..
-    fi
-     
-    echo "   Starting kelvinbward..."
-    cd apps/kelvinbward
-    if [ ! -f .env ]; then
-        if [ -f .env.template ]; then
-           cp .env.template .env
-        else
-           touch .env
-        fi
-    fi
-    docker compose up -d
-    cd ../..
-else
-    echo "   ⏭️  Skipping KelvinBward Hub (Disabled in apps.config)"
-fi
+# --- Application Loop ---
+if [ -n "${REGISTERED_APPS[*]}" ]; then
+    echo "🔄 Processing Registered Apps..."
+    for APP_ID in "${REGISTERED_APPS[@]}"; do
+        VAR_ENABLED="APP_${APP_ID}_ENABLED"
+        VAR_REPO="APP_${APP_ID}_REPO"
+        VAR_DIR="APP_${APP_ID}_DIR"
+        
+        IS_ENABLED="${!VAR_ENABLED}"
+        REPO_URL="${!VAR_REPO}"
+        TARGET_SUBDIR="${!VAR_DIR}"
+        
+        APP_NAME_LOWER=$(echo "$APP_ID" | tr '[:upper:]' '[:lower:]')
+        FULL_PATH="$SCRIPT_DIR/$TARGET_SUBDIR"
 
-# --- Middleware ---
-if [ "$ENABLE_MIDDLEWARE" = "true" ]; then
-    echo "Starting Middleware API..."
-    MIDDLEWARE_DIR="$SCRIPT_DIR/apps/middleware"
-
-    # Ensure repo is present
-    if [ ! -d "$MIDDLEWARE_DIR/.git" ]; then
-        echo "   📦 Cloning Middleware repository..."
-        if [ -z "$(ls -A $MIDDLEWARE_DIR 2>/dev/null)" ]; then
-            git clone https://github.com/kelvinbward/middleware.git "$MIDDLEWARE_DIR"
-        else
-            echo "   ⚠️  Directory not empty but no .git found. Attempting to recover..."
-            cd "$MIDDLEWARE_DIR"
-            git init
-            git remote add origin https://github.com/kelvinbward/middleware.git
-            git fetch
-            # Checkout main, discarding local changes to tracked files, but keeping untracked (like data/)
-            if git checkout main -f; then
-                 echo "   ✅ Recovered repo."
+        if [ "$IS_ENABLED" = "true" ]; then
+            echo "👉 Processing $APP_ID..."
+            
+            # 1. Clone / Recover / Pull
+            if [ ! -d "$FULL_PATH/.git" ]; then
+                if [ ! -d "$FULL_PATH" ]; then
+                     echo "   📦 Cloning $APP_ID..."
+                     mkdir -p "$(dirname "$FULL_PATH")"
+                     git clone "$REPO_URL" "$FULL_PATH"
+                else
+                     echo "   ⚠️  $APP_ID dir exists but no .git found. Recovering..."
+                     cd "$FULL_PATH"
+                     git init
+                     git remote add origin "$REPO_URL"
+                     git fetch
+                     if git checkout main -f; then
+                         echo "   ✅ Recovered repo."
+                     else
+                         echo "   ❌ Recovery failed for $APP_ID."
+                         exit 1
+                     fi
+                     cd "$SCRIPT_DIR"
+                fi
             else
-                 echo "   ❌ Recovery failed. Please delete '$MIDDLEWARE_DIR' and re-run."
-                 exit 1
+                echo "   🔄 Updating $APP_ID..."
+                cd "$FULL_PATH" && git pull && cd "$SCRIPT_DIR"
+            fi
+            
+            # 2. Configure Environment
+            cd "$FULL_PATH"
+            if [ ! -f .env ]; then
+                if [ -f .env.template ]; then
+                    echo "   📝 Creating .env from template..."
+                    cp .env.template .env
+                else
+                    echo "   ⚠️  .env.template not found. Creating empty .env..."
+                    touch .env
+                fi
+            fi
+            
+            # 3. Start Service
+            # Only start if mode is "cluster" (to be safe/explicit), or just default behavior
+            # Assuming docker-compose.yml exists
+            if [ -f "docker-compose.yml" ]; then
+                 echo "   🚀 Starting $APP_ID..."
+                 docker compose up -d
+            else
+                 echo "   ⚠️  No docker-compose.yml found for $APP_ID. Skipping start."
             fi
             cd "$SCRIPT_DIR"
-        fi
-    else
-        echo "   🔄 Updating Middleware repository..."
-        cd "$MIDDLEWARE_DIR" && git pull && cd "$SCRIPT_DIR"
-    fi
-    # Create .env from .env.template if not exists
-    cd "$MIDDLEWARE_DIR"
-    if [ ! -f .env ]; then
-        if [ -f .env.template ]; then
-            echo "   📝 Creating .env from template..."
-            cp .env.template .env
         else
-            echo "   ⚠️  .env.template not found. Creating empty .env..."
-            touch .env
+            echo "   ⏭️  Skipping $APP_ID (Disabled)"
         fi
-    fi
-    docker compose up -d
-    cd "$SCRIPT_DIR"
+    done
 else
-    echo "   ⏭️  Skipping Middleware API (Disabled in apps.config)"
+    echo "⚠️  No applications registered in apps.config"
 fi
 
 echo "Infrastructure setup complete."
