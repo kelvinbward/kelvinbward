@@ -72,10 +72,7 @@ touch "$SECRETS_FILE"
 # List of required secrets
 ensure_secret "POSTGRES_USER" "user"
 ensure_secret "POSTGRES_PASSWORD" "string"
-ensure_secret "CMS_ADMIN_EMAIL" "email"
-ensure_secret "CMS_ADMIN_PASSWORD" "string"
-ensure_secret "CMS_KEY" "string"
-ensure_secret "CMS_SECRET" "string"
+
 ensure_secret "NPM_ADMIN_EMAIL" "email"
 ensure_secret "NPM_ADMIN_PASSWORD" "string"
 
@@ -101,9 +98,6 @@ else
 # POSTGRES_USER=admin_custom
 # POSTGRES_PASSWORD=my_secure_password
 
-# --- CMS ---
-# CMS_ADMIN_EMAIL=admin@custom.domain
-# CMS_ADMIN_PASSWORD=complex_password
 
 # --- Nginx Proxy Manager ---
 # NPM_ADMIN_EMAIL=admin@custom.domain
@@ -266,12 +260,40 @@ create_proxy_host() {
     fi
 }
 
-# 3. Create Proxy Hosts
-create_proxy_host "resume.localhost" "resume-frontend-1" 80
-create_proxy_host "cms.localhost" "shared-cms-1" 8055
-create_proxy_host "audio.localhost" "creativeaudio-app-1" 5173
-create_proxy_host "goobface.localhost" "goobface-app-1" 4321
-create_proxy_host "middleware.localhost" "middleware-app-1" 5000
+# 3. Create Proxy Hosts (Dynamic based on Registry)
+
+# Load configuration if not already present (it should be)
+APPS_CONFIG_FILE="$SCRIPT_DIR/../apps.config"
+if [ -f "$APPS_CONFIG_FILE" ]; then
+    source "$APPS_CONFIG_FILE"
+fi
+
+# Resume App
+if [ "$APP_RESUME_ENABLED" = "true" ]; then
+    create_proxy_host "resume.localhost" "resume-frontend-1" 80
+fi
+
+# CreativeAudioJS
+if [ "$APP_CREATIVEAUDIOJS_ENABLED" = "true" ]; then
+    create_proxy_host "audio.localhost" "creativeaudio-app-1" 5173
+fi
+
+# Goobface
+if [ "$APP_GOOBFACE_ENABLED" = "true" ]; then
+    create_proxy_host "goobface.localhost" "goobface-app-1" 4321
+fi
+
+# Middleware
+if [ "$APP_MIDDLEWARE_ENABLED" = "true" ]; then
+    create_proxy_host "middleware.localhost" "middleware-app-1" 5000
+fi
+
+# KelvinBward (Adding explicit support if needed, assuming port 3000)
+if [ "$APP_KELVINBWARD_ENABLED" = "true" ]; then
+    create_proxy_host "kelvinbward.localhost" "kelvinbward-app-1" 3000
+fi
+
+# Management (Always Enabled)
 create_proxy_host "portainer.localhost" "portainer_management" 9000
 
 echo "✨ Gateway configuration complete."

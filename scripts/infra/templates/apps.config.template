@@ -3,7 +3,8 @@
 # Format: Bash Associative Array concept (simulated)
 
 # List of Registered Applications (Uppercase Identifiers)
-REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE")
+# List of Registered Applications (Uppercase Identifiers)
+REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE" "RESUME" "GOOBFACE" "CREATIVEAUDIOJS")
 
 # --- APP: KELVINBWARD ---
 APP_KELVINBWARD_ENABLED=true
@@ -16,6 +17,24 @@ APP_MIDDLEWARE_ENABLED=true
 APP_MIDDLEWARE_REPO="https://github.com/kelvinbward/middleware.git"
 APP_MIDDLEWARE_DIR="apps/middleware"
 APP_MIDDLEWARE_MODE="cluster"
+
+# --- APP: RESUME ---
+APP_RESUME_ENABLED=true
+APP_RESUME_REPO="https://github.com/kelvinbward/resume.git"
+APP_RESUME_DIR="apps/resume"
+APP_RESUME_MODE="gitops"
+
+# --- APP: GOOBFACE ---
+APP_GOOBFACE_ENABLED=true
+APP_GOOBFACE_REPO="https://github.com/kelvinbward/goobface.git"
+APP_GOOBFACE_DIR="apps/goobface"
+APP_GOOBFACE_MODE="cluster"
+
+# --- APP: CREATIVEAUDIOJS ---
+APP_CREATIVEAUDIOJS_ENABLED=true
+APP_CREATIVEAUDIOJS_REPO="https://github.com/kelvinbward/creativeAudioJS.git"
+APP_CREATIVEAUDIOJS_DIR="apps/creativeAudioJS"
+APP_CREATIVEAUDIOJS_MODE="cluster"
 
 # --- FUTURE APPS ---
 # To add a new app:
