@@ -18,18 +18,18 @@ The ecosystem follows a **Registry-Driven** bootstrap process. The `apps.config`
 
 ```mermaid
 graph TD
-    User([User / Agent]) -->|1. Runs| INIT[init_infra.sh]
+    User(["User / Agent"]) -->|1. Runs| INIT[init_infra.sh]
     
     subgraph "Bootstrap Process"
         INIT -->|Reads| REG[apps.config]
-        INIT -->|Installs| SETUP[setup.sh (Template)]
+        INIT -->|Installs| SETUP["setup.sh (Template)"]
         INIT -->|Scaffolds| DIRS[Directory Structure]
     end
     
     subgraph "Orchestration (setup.sh)"
         SETUP -->|Iterates| REG
-        SETUP -->|Clones/Recovers| APPS[Public Repos (Modules)]
-        SETUP -->|Generates| ENV[.env Configs]
+        SETUP -->|Clones/Recovers| APPS["Public Repos (Modules)"]
+        SETUP -->|Generates| ENV[".env Configs"]
         SETUP -->|Starts| DOCKER[Docker Compose Cluster]
     end
     
