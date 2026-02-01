@@ -160,8 +160,9 @@ echo "🔧 Configuring Nginx Proxy Manager at $NPM_URL..."
 
 # 1. Wait for API to be ready
 echo "   Waiting for NPM API..."
-until curl -s "$NPM_URL/api" > /dev/null; do
-    sleep 2
+until curl -s -f "$NPM_URL/api" > /dev/null; do
+    echo "      ...waiting for $NPM_URL/api (HTTP 200)"
+    sleep 5
 done
 
 # 2. Authenticate (Try Default First, then Secure)

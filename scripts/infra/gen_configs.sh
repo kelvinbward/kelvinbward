@@ -13,7 +13,7 @@ else
 version: '3.8'
 services:
   app:
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: 'jc21/nginx-proxy-manager:2.10.4'
     restart: unless-stopped
     ports:
       - '80:80'
