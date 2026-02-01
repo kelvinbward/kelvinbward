@@ -54,11 +54,14 @@ Before providing a PR link, you **MUST** run:
     *   Wait for `Agent Gatekeeper` checks to pass.
     *   Merge (Squash/Rebase).
 3.  **Agent Cleanup (Start of Next Task)**:
-    *   **MANDATORY**: Before starting ANY new task:
-        *   `git checkout main`
-        *   `git pull origin main`
-        *   `git branch -d feature/previous-task` (Clean up local workspace)
-
+    *   **MANDATORY**: Before starting ANY new task, you must run the cleanup script to reset your environment:
+        ```bash
+        ./scripts/git_cleanup.sh
+        ```
+    *   This script will:
+        *   Stash local changes (if any).
+        *   Checkout and update `main`.
+        *   Delete local feature branches.
 
 ## 📋 Role
 **System Hub**: This repository is the central entry point for the "Kelvin B. Ward" digital ecosystem. It directs traffic to specialized nodes (Professional vs. Personal) and holds the global architectural definition.
@@ -69,8 +72,8 @@ Before providing a PR link, you **MUST** run:
 - **`pi-cluster-configs/`**: (Private) The "Engine Room". Contains Nginx Proxy Manager, Portainer, shared PostgreSQL, and global network definitions.
 - **`resume/`**: (Public) Full-stack application. **Deployed to Hub** (`kelvinbward.com/resume/`).
 - **`creativeAudioJS/`**: (Private) Generative audio experiments.
-- **`Goobface/`: (Public)`apps/goobface` (Game/Blog Platform)
-- **`Middleware/`: (Public Repo/Private Access)`apps/middleware` (Python Backend API)
+- **`goobface/`: (Public) `apps/goobface` (Game/Blog Platform).
+- **`middleware/`: (Public/Private Access) `apps/middleware` (FastAPI Backend).
 - **`kelvinbward/`: (Public) **System Hub**. Hosts the central landing page and the Resume module.
 
 ## 🔄 Self-Documentation Protocol (CRITICAL)
