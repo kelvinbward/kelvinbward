@@ -19,6 +19,7 @@ The central registry of all active repositories in the workspace.
     *   **Standard Repos**: Stashes changes, checkouts `main`, pulls latest, prunes local feature branches.
     *   **Sandbox (`pi-cluster-configs`)**: Resets hard to `origin/main`.
     *   **Safety**: Default mode preserves `secrets.env` and data volumes. Use `-f` to force delete untracked files.
+    *   **⚠️ WARNING**: This script performs `git branch -D` (Force Delete) on local branches aside from `main`. Ensure all work is **PUSHED** to origin before running. Stashing only saves uncommitted local changes, not the branch history itself.
 
 ### `git_broadcast.sh`
 **Batch Execution**: Runs an arbitrary command across all registered repositories.

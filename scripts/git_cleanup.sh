@@ -23,6 +23,9 @@ done
 echo "🧹 Git Cleanup Utility"
 echo "----------------------"
 echo "Mode: $CLEAN_MODE"
+echo "⚠️  WARNING: This script FORCE DELETES (-D) all local branches other than main."
+echo "   Ensure you have PUSHED your work to origin before proceeding."
+echo "   Stashed changes are saved, but branch context will be lost."
 echo ""
 
 # Load Repo List
