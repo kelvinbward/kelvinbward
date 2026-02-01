@@ -35,7 +35,10 @@ graph TD
     
     subgraph "Runtime Traffic"
         WEB[Web Client] -->|*.localhost| NPM[Nginx Gateway]
-        NPM -->|Route| APPS
+        NPM -->|goobface.com| GOOB[Goobface]
+        NPM -->|kelvinbward.com| RES[Resume]
+        NPM -->|/3d-printing| BLOG[3D Blog]
+        NPM -->|Other| APPS[Other Apps]
     end
 ```
 
@@ -48,6 +51,7 @@ graph TD
 | **Resume App** | `resume-frontend-1:80` | `resume.localhost` | `/health` | [Live](https://www.kelvinbward.com/resume/) |
 | **Goobface** | `goobface-app-1:4321` | `goobface.localhost` | `/` | [Live](https://www.goobface.com) |
 | **Middleware** | `middleware-app-1:5000` | `middleware.localhost` | `/api/health` | Active |
+| **3D Blog** | `3d-printing-blog:80` | `goobface.localhost/3d-printing` | `/3d-printing/` | [Live](https://kelvinbward.github.io/3D-Printing) |
 | **PostgreSQL** | `resume-db-1:5432` | *(Internal Only)* | `pg_isready` | Active |
 
 ## 🤖 Agent Hand-off
