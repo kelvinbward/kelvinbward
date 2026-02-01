@@ -4,7 +4,7 @@
 
 # List of Registered Applications (Uppercase Identifiers)
 # List of Registered Applications (Uppercase Identifiers)
-REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE" "RESUME" "GOOBFACE" "CREATIVEAUDIOJS")
+REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE" "RESUME" "GOOBFACE" "CREATIVEAUDIOJS" "BLOG")
 
 # --- APP: KELVINBWARD ---
 APP_KELVINBWARD_ENABLED=true
@@ -35,6 +35,12 @@ APP_CREATIVEAUDIOJS_ENABLED=true
 APP_CREATIVEAUDIOJS_REPO="https://github.com/kelvinbward/creativeAudioJS.git"
 APP_CREATIVEAUDIOJS_DIR="apps/creativeAudioJS"
 APP_CREATIVEAUDIOJS_MODE="cluster"
+
+# --- APP: BLOG (3D-Printing) ---
+APP_BLOG_ENABLED=true
+APP_BLOG_REPO="https://github.com/kelvinbward/3D-Printing.git"
+APP_BLOG_DIR="apps/3d-printing"
+APP_BLOG_MODE="cluster"
 
 # --- FUTURE APPS ---
 # To add a new app:
