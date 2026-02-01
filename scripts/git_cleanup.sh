@@ -45,13 +45,6 @@ for REPO in "${REPOS[@]}"; do
         # Fetch latest
         git fetch origin
 
-        # Checkout Main
-        CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
-        if [ "$CURRENT_BRANCH" != "main" ]; then
-            echo "  switched to main..."
-            git checkout main
-        fi
-
         # Aggressive Reset to match Origin Main exactly
         echo "  🔄 Resetting to origin/main..."
         git reset --hard origin/main
