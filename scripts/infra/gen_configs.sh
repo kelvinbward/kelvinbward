@@ -13,7 +13,7 @@ else
 version: '3.8'
 services:
   app:
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: 'jc21/nginx-proxy-manager:2.10.4'
     restart: unless-stopped
     ports:
       - '80:80'
@@ -51,27 +51,6 @@ services:
       - "5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - web_gateway
-
-  cms:
-    image: directus/directus:latest
-    container_name: shared-cms-1
-    restart: unless-stopped
-    environment:
-      KEY: '\${CMS_KEY}'
-      SECRET: '\${CMS_SECRET}'
-      ADMIN_EMAIL: '\${CMS_ADMIN_EMAIL}'
-      ADMIN_PASSWORD: '\${CMS_ADMIN_PASSWORD}'
-      DB_CLIENT: 'pg'
-      DB_HOST: 'db'
-      DB_PORT: '5432'
-      DB_DATABASE: 'resume_db'
-      DB_USER: '\${POSTGRES_USER}'
-      DB_PASSWORD: '\${POSTGRES_PASSWORD}'
-      PUBLIC_URL: 'http://cms.localhost'
-    depends_on:
-      - db
     networks:
       - web_gateway
 
