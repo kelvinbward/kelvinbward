@@ -48,7 +48,7 @@ graph TD
 | :--- | :--- | :--- | :--- |
 | **KELVINBWARD** | `kelvinbward-app-1` | `3000` | cluster |
 | **MIDDLEWARE** | `middleware-app-1` | `5000` | cluster |
-| **RESUME** | `resume-frontend-1` | `80` | gitops |
+| **RESUME** | `resume-frontend-1` | `80` | cluster |
 | **GOOBFACE** | `goobface-app-1` | `4321` | cluster |
 | **CREATIVEAUDIOJS** | `creative-audio-1` | `5173` | cluster |
 
