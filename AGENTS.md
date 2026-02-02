@@ -21,7 +21,7 @@
 
 ## 🔄 Handoff Protocol
 1.  **Ops Library**: Changes to `.github/workflows` affect ALL hubs/spokes. Test with caution.
-2.  **Immutability**: `public/resume` is LOCKED. Update via PR from `resume` repo only.
+2.  **Workflow**: Push to `infra/` or `feature/` branch. Create PR to `main`.
 
 ## 🤝 Collaborative Workflow
 - **Branching**: `infra/` (Ops changes), `feature/` (Content).
