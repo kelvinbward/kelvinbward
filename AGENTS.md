@@ -1,10 +1,9 @@
 # 🧠 Service: Professional Hub (kelvinbward)
 
 ## 📋 Service Role
-**Professional Identity Root**.
+**Professional Hub**.
 - **Domain**: `kelvinbward.com`
-- **Function**: Aggregator for professional spokes (`resume`).
-- **Ops Role**: Source of Truth for CI/CD workflows (`.github/workflows/`).
+- **Function**: Landing page + aggregated professional content (`resume`).
 
 ## 📡 Service Topology
 | Context | Hostname | Port | Visibility |
@@ -20,7 +19,7 @@
 | **Static** | `package.json` | `npm run dev` | Local Next.js dev server. |
 
 ## 🔄 Handoff Protocol
-1.  **Ops Library**: Changes to `.github/workflows` affect ALL hubs/spokes. Test with caution.
+1.  **Immutability**: `public/resume` is LOCKED. Update via PR from `resume` repo.
 2.  **Workflow**: Push to `infra/` or `feature/` branch. Create PR to `main`.
 
 ## 🤝 Collaborative Workflow

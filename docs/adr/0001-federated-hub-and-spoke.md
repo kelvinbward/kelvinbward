@@ -19,24 +19,28 @@ We needed a way to:
 
 We have adopted a **Federated Hub-and-Spoke** model.
 
-### 1. The Hubs (Content & Distribution)
+### 1. The Ops Library (`kelvinbward/.github`)
+- **Role**: Central CI/CD workflow provider.
+- **Responsibility**: Hosts reusable workflows (`.github/workflows/standard-static-deploy.yml`).
+- **Consumers**: ALL hubs and spokes reference these workflows.
+
+### 2. The Hubs (Content & Distribution)
 We distinct between two primary Hubs:
 *   **Professional Hub (`kelvinbward`)**:
     *   **Domain**: `kelvinbward.com`
     *   **Role**: Professional portfolio, resume, and case studies.
-    *   **Ops Role**: Hosts the `.github` Ops Library.
 *   **Personal Hub (`goobface`)**:
     *   **Domain**: `goobface.com`
     *   **Role**: Creative sandbox, game platform, and personal blog.
 
 Both Hubs consume the same reusable workflows but serve different audiences.
 
-### 2. The Engine (`pi-cluster-configs`)
+### 3. The Engine (`pi-cluster-configs`)
 - **Role**: The internal state machine.
 - **Responsibility**: Manages the `apps.config` registry, valid ports, and Docker orchestration (`setup.sh`).
 - **Secret Management**: All secrets and environment variables originate here.
 
-### 3. The Spokes
+### 4. The Spokes
 - **Role**: Autonomous application domains.
 - **Responsibility**: Contain business logic and source code.
 - **Deployment**: They build themselves using the Hub's standard workflow and "push" artifacts to the **target Hub** (`kelvinbward` OR `goobface`) via Pull Request.
