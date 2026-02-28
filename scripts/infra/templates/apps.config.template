@@ -4,7 +4,7 @@
 
 # List of Registered Applications (Uppercase Identifiers)
 # List of Registered Applications (Uppercase Identifiers)
-REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE" "RESUME" "GOOBFACE" "CREATIVEAUDIOJS" "BLOG")
+REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE" "RESUME" "GOOBFACE" "CREATIVEAUDIOJS" "BLOG" "3DPRINTING" "CLIPBOARDSPOKE" "CREATIVEAUDIOJS" "GOOBFACE" "MIDDLEWARE" "RESUME")
 
 # --- APP: KELVINBWARD ---
 APP_KELVINBWARD_ENABLED=true
@@ -42,7 +42,38 @@ APP_BLOG_REPO="https://github.com/kelvinbward/3D-Printing.git"
 APP_BLOG_DIR="apps/3d-printing"
 APP_BLOG_MODE="cluster"
 
-# --- FUTURE APPS ---
-# To add a new app:
-# 1. Add identifier to REGISTERED_APPS: ("OLD" "NEW")
-# 2. Define APP_NEW_ENABLED, APP_NEW_REPO, etc.
+# --- APP: 3DPRINTING ---
+APP_3DPRINTING_ENABLED=true
+APP_3DPRINTING_REPO="git@github.com:kelvinbward/3D-Printing.git"
+APP_3DPRINTING_DIR="apps/3d-printing"
+APP_3DPRINTING_MODE="cluster"
+
+# --- APP: CLIPBOARDSPOKE ---
+APP_CLIPBOARDSPOKE_ENABLED=true
+APP_CLIPBOARDSPOKE_REPO="https://github.com/kelvinbward/clipboard-spoke.git"
+APP_CLIPBOARDSPOKE_DIR="apps/clipboard-spoke"
+APP_CLIPBOARDSPOKE_MODE="cluster"
+
+# --- APP: CREATIVEAUDIOJS ---
+APP_CREATIVEAUDIOJS_ENABLED=true
+APP_CREATIVEAUDIOJS_REPO="git@github.com:kelvinbward/creativeAudioJS.git"
+APP_CREATIVEAUDIOJS_DIR="apps/creativeaudiojs"
+APP_CREATIVEAUDIOJS_MODE="cluster"
+
+# --- APP: GOOBFACE ---
+APP_GOOBFACE_ENABLED=true
+APP_GOOBFACE_REPO="git@github.com:kelvinbward/goobface.git"
+APP_GOOBFACE_DIR="apps/goobface"
+APP_GOOBFACE_MODE="cluster"
+
+# --- APP: MIDDLEWARE ---
+APP_MIDDLEWARE_ENABLED=true
+APP_MIDDLEWARE_REPO="git@github.com:kelvinbward/middlleware.git"
+APP_MIDDLEWARE_DIR="apps/middleware"
+APP_MIDDLEWARE_MODE="cluster"
+
+# --- APP: RESUME ---
+APP_RESUME_ENABLED=true
+APP_RESUME_REPO="git@github.com:kelvinbward/resume.git"
+APP_RESUME_DIR="apps/resume"
+APP_RESUME_MODE="cluster"
