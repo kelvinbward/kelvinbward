@@ -123,11 +123,13 @@ func cleanGit() {
 			// Clean Untracked
 			if forceClean {
 				fmt.Println("  🔥 [FORCE] Nuking untracked files...")
-				runInDir(repo, "git", "clean", "-fd")
+				if _, err := runInDir(repo, "git", "clean", "-fd"); err != nil {
+					fmt.Printf("  ⚠️  clean failed: %v\n", err)
+				}
 			} else {
 				fmt.Println("  🛡️ [SAFE] Cleaning but preserving configuration/data...")
 				// We build the equivalent of the bash shell git clean using exclude args
-				runInDir(repo, "git", "clean", "-fd",
+				if _, err := runInDir(repo, "git", "clean", "-fd",
 					"-e", "secrets.env",
 					"-e", "config.env",
 					"-e", "gateway/data",
@@ -135,7 +137,9 @@ func cleanGit() {
 					"-e", "core-services/postgres_data",
 					"-e", "management/data",
 					"-e", ".vscode",
-					"-e", ".idea")
+					"-e", ".idea"); err != nil {
+					fmt.Printf("  ⚠️  safe clean failed: %v\n", err)
+				}
 			}
 		} else {
 			// Standard Repo Logic
@@ -143,19 +147,25 @@ func cleanGit() {
 			statusOut, _ := runInDir(repo, "git", "status", "-s")
 			if strings.TrimSpace(statusOut) != "" {
 				fmt.Println("  📦 Stashing local changes...")
-				runInDir(repo, "git", "stash")
+				if _, err := runInDir(repo, "git", "stash"); err != nil {
+					fmt.Printf("  ⚠️  stash failed: %v\n", err)
+				}
 			}
 
 			// Checkout main if not already
 			branchOut, err := runInDir(repo, "git", "symbolic-ref", "--short", "HEAD")
 			if err == nil && strings.TrimSpace(branchOut) != "main" {
 				fmt.Println("  switched to main...")
-				runInDir(repo, "git", "checkout", "main")
+				if _, err := runInDir(repo, "git", "checkout", "main"); err != nil {
+					fmt.Printf("  ⚠️  checkout failed: %v\n", err)
+				}
 			}
 
 			// Pull Rebase
 			fmt.Println("  ⬇️  Pulling origin main...")
-			runInDir(repo, "git", "pull", "--rebase", "origin", "main")
+			if _, err := runInDir(repo, "git", "pull", "--rebase", "origin", "main"); err != nil {
+				fmt.Printf("  ⚠️  pull failed: %v\n", err)
+			}
 		}
 
 		// Prune Branches for both cases
@@ -166,7 +176,9 @@ func cleanGit() {
 			for scanner.Scan() {
 				b := scanner.Text()
 				if b != "main" && b != "" && !strings.Contains(b, "*") {
-					runInDir(repo, "git", "branch", "-D", b)
+					if _, err := runInDir(repo, "git", "branch", "-D", b); err != nil {
+						fmt.Printf("  ⚠️  failed to prune branch %s: %v\n", b, err)
+					}
 				}
 			}
 		}
