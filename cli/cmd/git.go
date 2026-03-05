@@ -51,12 +51,7 @@ func runInDir(dir string, command string, args ...string) (string, error) {
 
 func getRepos() []string {
 	// Re-evaluate the dynamic workspace root
-	cwd, err := os.Getwd()
-	if err != nil {
-		fmt.Printf("❌ Failed to get current directory: %v\n", err)
-		os.Exit(1)
-	}
-	workspaceRoot := filepath.Clean(filepath.Join(cwd, "..", ".."))
+	workspaceRoot := ResolveWorkspaceRoot()
 
 	// We can either execute `repos.sh` and parse it or simply traverse the directory like `repos sync`
 	// Doing the traversal here is safer than trying to execute bash and source an array.

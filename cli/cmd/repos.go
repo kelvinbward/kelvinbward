@@ -34,22 +34,7 @@ func init() {
 }
 
 func syncRepos() {
-	// Our binary will be running from /home/derp/projects/kelvinbward/cli
-	// We want the workspace root to be /home/derp/projects/
-	// So we need to evaluate where we are running from, or base it on the project structure.
-
-	// Get current working directory assuming execution from within kelvinbward somewhere
-	// but let's be robust and locate the binary path or current directory.
-	cwd, err := os.Getwd()
-	if err != nil {
-		fmt.Printf("❌ Failed to get current directory: %v\n", err)
-		os.Exit(1)
-	}
-
-	// For predictability, let's assume kelvinbward is the anchor.
-	// We want to go up until we hit the folder containing kelvinbward, which is the workspace root.
-	// Executing from /home/derp/projects/kelvinbward/cli means we go up two levels.
-	workspaceRoot := filepath.Clean(filepath.Join(cwd, "..", ".."))
+	workspaceRoot := ResolveWorkspaceRoot()
 
 	fmt.Printf("🔄 Scanning workspace at %s for Git repositories...\n", workspaceRoot)
 
