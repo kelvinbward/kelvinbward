@@ -15,6 +15,22 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Kelvin B. Ward | System Hub",
   description: "Federated Architecture, Full-Stack Engineering, and Digital Portfolio.",
+  openGraph: {
+    title: "Kelvin B. Ward | System Hub",
+    description: "Federated Architecture, Full-Stack Engineering, and Digital Portfolio.",
+    url: "https://kelvinbward.com",
+    siteName: "Kelvin B. Ward",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Kelvin B. Ward | System Hub",
+    description: "Federated Architecture, Full-Stack Engineering, and Digital Portfolio.",
+  },
+};
+
+export const viewport = {
+  themeColor: "#0d1117",
 };
 
 export default function RootLayout({

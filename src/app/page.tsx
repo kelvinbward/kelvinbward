@@ -139,10 +139,10 @@ export default function Home() {
 
         {/* Footer Links */}
         <footer className="flex gap-6 mt-8 animate-fade-in [animation-delay:300ms]">
-          <a href="https://github.com/kelvinbward" target="_blank" className="text-[#8b949e] hover:text-white transition-colors">
+          <a href="https://github.com/kelvinbward" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-[#8b949e] hover:text-white transition-colors">
             <Github size={20} />
           </a>
-          <a href="https://linkedin.com/in/kelvinbward" target="_blank" className="text-[#8b949e] hover:text-[#0a66c2] transition-colors">
+          <a href="https://linkedin.com/in/kelvinbward" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-[#8b949e] hover:text-[#0a66c2] transition-colors">
             <Linkedin size={20} />
           </a>
         </footer>
