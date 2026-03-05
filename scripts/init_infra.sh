@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+echo "⚠️  NOTICE: This script is deprecated. Use 'kelvin-cli infra init' instead."
+echo ""
 
 # ==============================================================================
 # 🏗️  Private Cloud Bootstrapper (Orchestrator)

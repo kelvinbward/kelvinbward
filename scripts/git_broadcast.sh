@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+echo "⚠️  NOTICE: This script is deprecated. Use 'kelvin-cli git' instead."
+echo ""
 
 # Generic Git Broadcast Utility
 # Runs the specified command in every registered repository

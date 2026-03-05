@@ -19,6 +19,7 @@
 
 # production
 /build
+cli/kelvin-cli
 
 # misc
 .DS_Store

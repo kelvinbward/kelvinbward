@@ -11,6 +11,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func runOrWarn(label string, cmd *exec.Cmd) {
+	if err := cmd.Run(); err != nil {
+		fmt.Fprintf(os.Stderr, "⚠️  %s: %v\n", label, err)
+	}
+}
+
 var runSetup bool
 
 var infraCmd = &cobra.Command{
@@ -48,13 +54,7 @@ func initInfra() {
 	fmt.Println("🚀 Starting Private Cloud Bootstrap...")
 
 	// Determine workspace root dynamically
-	cwd, err := os.Getwd()
-	if err != nil {
-		fmt.Printf("❌ Failed to get current directory: %v\n", err)
-		os.Exit(1)
-	}
-	// Binary runs from kelvinbward/cli, so up two relative up to workspace
-	workspaceRoot := filepath.Clean(filepath.Join(cwd, "..", ".."))
+	workspaceRoot := ResolveWorkspaceRoot()
 
 	targetDir := filepath.Join(workspaceRoot, "pi-cluster-configs")
 	infraScriptsDir := filepath.Join(workspaceRoot, "kelvinbward", "scripts", "infra")
@@ -80,21 +80,21 @@ func initInfra() {
 	scaffoldCmd := exec.Command(filepath.Join(infraScriptsDir, "scaffold_dirs.sh"), targetDir)
 	scaffoldCmd.Stdout = os.Stdout
 	scaffoldCmd.Stderr = os.Stderr
-	_ = scaffoldCmd.Run()
+	runOrWarn("scaffold_dirs.sh", scaffoldCmd)
 
 	// 3. Generating Configurations
 	fmt.Println("📝 [Step 3] Generating Docker Configs...")
 	genConfigsCmd := exec.Command(filepath.Join(infraScriptsDir, "gen_configs.sh"), targetDir)
 	genConfigsCmd.Stdout = os.Stdout
 	genConfigsCmd.Stderr = os.Stderr
-	_ = genConfigsCmd.Run()
+	runOrWarn("gen_configs.sh", genConfigsCmd)
 
 	// 4. Generating Automation Scripts
 	fmt.Println("⚙️ [Step 4] Generating Helper Scripts...")
 	genScriptsCmd := exec.Command(filepath.Join(infraScriptsDir, "gen_scripts.sh"), targetDir)
 	genScriptsCmd.Stdout = os.Stdout
 	genScriptsCmd.Stderr = os.Stderr
-	_ = genScriptsCmd.Run()
+	runOrWarn("gen_scripts.sh", genScriptsCmd)
 
 	// 5. Bootstrap Instructions
 	fmt.Println("\n✅ Bootstrap Complete!")
@@ -156,12 +156,7 @@ func cleanInfra() {
 		fmt.Println("🛑 Stopping services in pi-cluster-configs...")
 
 		// Determine workspace root dynamically
-		cwd, err := os.Getwd()
-		if err != nil {
-			fmt.Printf("❌ Failed to get current directory: %v\n", err)
-			os.Exit(1)
-		}
-		workspaceRoot := filepath.Clean(filepath.Join(cwd, "..", ".."))
+		workspaceRoot := ResolveWorkspaceRoot()
 		targetDir := filepath.Join(workspaceRoot, "pi-cluster-configs")
 
 		services := []string{"gateway", "core-services", "management"}
@@ -179,7 +174,7 @@ func cleanInfra() {
 
 		fmt.Println("🕸️  Removing web_gateway network...")
 		netCmd := exec.Command("docker", "network", "rm", "web_gateway")
-		_ = netCmd.Run()
+		runOrWarn("docker network rm web_gateway", netCmd)
 
 		fmt.Println("✅ Infrastructure cleanup complete.")
 	} else {
