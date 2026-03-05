@@ -54,13 +54,7 @@ func initInfra() {
 	fmt.Println("🚀 Starting Private Cloud Bootstrap...")
 
 	// Determine workspace root dynamically
-	cwd, err := os.Getwd()
-	if err != nil {
-		fmt.Printf("❌ Failed to get current directory: %v\n", err)
-		os.Exit(1)
-	}
-	// Binary runs from kelvinbward/cli, so up two relative up to workspace
-	workspaceRoot := filepath.Clean(filepath.Join(cwd, "..", ".."))
+	workspaceRoot := ResolveWorkspaceRoot()
 
 	targetDir := filepath.Join(workspaceRoot, "pi-cluster-configs")
 	infraScriptsDir := filepath.Join(workspaceRoot, "kelvinbward", "scripts", "infra")
@@ -162,12 +156,7 @@ func cleanInfra() {
 		fmt.Println("🛑 Stopping services in pi-cluster-configs...")
 
 		// Determine workspace root dynamically
-		cwd, err := os.Getwd()
-		if err != nil {
-			fmt.Printf("❌ Failed to get current directory: %v\n", err)
-			os.Exit(1)
-		}
-		workspaceRoot := filepath.Clean(filepath.Join(cwd, "..", ".."))
+		workspaceRoot := ResolveWorkspaceRoot()
 		targetDir := filepath.Join(workspaceRoot, "pi-cluster-configs")
 
 		services := []string{"gateway", "core-services", "management"}
