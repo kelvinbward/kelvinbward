@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"os/exec"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -42,14 +41,14 @@ func cleanDocker() {
 		fmt.Println("🚨 Nuking Docker state...")
 
 		// Stop all running containers
-		psCmd := exec.Command("docker", "ps", "-aq")
+		psCmd := execCommand("docker", "ps", "-aq")
 		output, err := psCmd.Output()
 		if err == nil {
 			containerIDs := strings.Fields(string(output))
 			if len(containerIDs) > 0 {
 				fmt.Println("   Stopping containers...")
 				stopArgs := append([]string{"stop"}, containerIDs...)
-				stopCmd := exec.Command("docker", stopArgs...)
+				stopCmd := execCommand("docker", stopArgs...)
 				// Ignore errors on stop, best effort
 				_ = stopCmd.Run()
 			}
@@ -57,7 +56,7 @@ func cleanDocker() {
 
 		// Prune everything
 		fmt.Println("   Running system prune...")
-		pruneCmd := exec.Command("docker", "system", "prune", "-a", "--volumes", "-f")
+		pruneCmd := execCommand("docker", "system", "prune", "-a", "--volumes", "-f")
 		pruneCmd.Stdout = os.Stdout
 		pruneCmd.Stderr = os.Stderr
 

@@ -31,6 +31,48 @@ The ecosystem is divided into three fundamental categories of repositories:
 ---
 
 ## Tooling: `kelvin-cli`
-To interact with the multi-repository workspace seamlessly, we utilize a unified compiled Go binary (`kelvin-cli`) stored in `kelvinbward/cli`. It allows safe initialization of the cluster, automated repository syncing, and destructive safe-state recovery natively.
+To interact with the multi-repository workspace seamlessly, we utilize a unified compiled Go binary (`kelvin-cli`) stored in `kelvinbward/cli`. It allows safe initialization of the cluster, automated repository syncing, application scaffolding, and real-time environment monitoring.
+
+### Core Utilities
+- **`infra` command suite**: Controls local daemon and monitors clustered apps (e.g., `status`, `logs`, `reload`).
+- **`app` command suite**: Standardizes the scaffolding of new Spokes explicitly into an Nginx-ready network state.
+- **`git` command suite**: Protects from missed commits across fragmented microservices by auditing all synchronized spokes. 
+
+### Setting up `kelvin-cli`
+
+If you haven't used the CLI in a while, or are setting up a new environment, you will need to compile the Go binary and ensure it's accessible.
+
+**1. Install Go (if not installed)**
+*   [Download Go](https://go.dev/doc/install)
+*   Ubuntu/Debian: `sudo apt install golang`
+
+**2. Compile the CLI**
+Navigate to the cli directory and build the binary:
+```bash
+cd ~/Projects/kelvinbward/cli
+go build -o kelvin-cli .
+```
+
+**3. Make it globally accessible**
+You can use either an **alias** OR the Go `PATH` method.
+
+*   **Method A: Add an Alias (Quickest)**
+    Add the following line to your `~/.aliases` (or `~/.bashrc` / `~/.zshrc`):
+    ```bash
+    alias kelvin-cli='~/Projects/kelvinbward/cli/kelvin-cli'
+    ```
+
+*   **Method B: Install to Go PATH**
+    Alternatively, use `go install` to place it in your standard Go binary folder:
+    ```bash
+    cd ~/Projects/kelvinbward/cli
+    go install .
+    ```
+    Then ensure your Go bin path is exported in your `~/.bashrc`:
+    ```bash
+    export PATH=$PATH:$(go env GOPATH)/bin
+    ```
+
+*(Remember to reload your terminal config by running `source ~/.aliases` or `source ~/.bashrc`)*
 
 For a deeper dive into the architectural reasoning, review the [Ecosystem Architecture Guide](architecture.md).

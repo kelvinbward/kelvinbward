@@ -59,6 +59,17 @@ graph TD
 3.  **Branching**: Create `feature/<name>` or `fix/<name>`.
 4.  **Sync State**: Generate `STATE.md` before PR validation.
 
+## 🛠 Utility Tooling: `kelvin-cli`
+
+This ecosystem uses a custom compiled Go binary embedded within `kelvinbward/cli` to orchestrate spanning tasks across the federated Hub-and-Spoke repositories. 
+
+The CLI tools natively replace legacy bash scripts to operate:
+- **`kelvin-cli infra status`**: Generates a unified overview of all active ecosystem applications and their docker container states.
+- **`kelvin-cli infra logs <app_name>`**: Zero-friction log tailing that discovers the container automatically.
+- **`kelvin-cli infra reload`**: Securely bounces the proxy without dropping the entire network topology.
+- **`kelvin-cli git status`**: Analyzes the working tree and origin divergency across *all* connected projects in a cleanly formatted table.
+- **`kelvin-cli app create <name> --type <framework>`**: Scaffolds an entirely new business application, injects ecosystem-standard continuous deployment docker files, binds to the `web_gateway` network router, and dynamically registers it.
+
 ## 🚀 Execution Modes
 
 This Hub supports multiple modes of operation to ensure flexibility across development, standalone hosting, and cluster integration.

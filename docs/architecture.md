@@ -43,3 +43,11 @@ Spokes are where the actual coding happens.
 - **Modularity**: You can develop a Spoke entirely on your local machine without needing the rest of the ecosystem.
 - **Security**: It is incredibly easy to see exactly what is exposed to the public internet by simply looking at the `/public/` folder in a Hub repository. 
 - **Consistency**: Centralized workflows mean when we improve our deployment strategy once, every application gets the upgrade immediately.
+
+---
+
+## 🧪 CLI Testing Architecture
+The `kelvin-cli` implements a hermetic testing environment avoiding side-effects (like spinning up actual docker networks or creating dummy Git repositories) during CI/CD execution.
+- **`TestHelperProcess` Mocking:** Calls to `exec.Command` natively fork into a sub-shell invoking a fake test process instead of hitting actual shell environments.
+- **Hook Variables:** All Go source code relies on the swappable `execCommand` hook locally defined in `cli/cmd/exec.go`.
+- Agents and developers expanding this CLI MUST follow this precise testing paradigm, returning pre-populated mocked CLI text string outputs matching the expected target utility tool, rather than hitting actual infrastructure endpoints inside the automated pipeline tests.

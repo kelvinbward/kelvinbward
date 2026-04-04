@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -130,7 +129,7 @@ func updateAppsConfigTemplate(workspaceRoot string, foundRepos []string) {
 		}
 
 		// Get remote origin
-		urlCmd := exec.Command("git", "config", "--get", "remote.origin.url")
+		urlCmd := execCommand("git", "config", "--get", "remote.origin.url")
 		urlCmd.Dir = repoDir
 		out, _ := urlCmd.Output()
 		repoURL := strings.TrimSpace(string(out))
