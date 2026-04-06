@@ -3,7 +3,7 @@ import { Briefcase, Terminal, Gamepad2, FlaskConical, Github, Linkedin, Cpu } fr
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-surface text-text font-[family-name:var(--font-geist-sans)] selection:bg-accent-blue selection:bg-opacity-30">
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-8 bg-surface text-text font-[family-name:var(--font-geist-sans)] selection:bg-accent-blue selection:bg-opacity-30">
       <main className="flex flex-col items-center gap-8 text-center max-w-5xl w-full">
 
         {/* Header Section */}
