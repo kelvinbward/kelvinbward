@@ -5,9 +5,9 @@ import (
 	"bytes"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
+	"text/tabwriter"
 
 	"github.com/spf13/cobra"
 )
@@ -30,14 +30,23 @@ Use --force to destructively remove ALL untracked files including secrets.`,
 	},
 }
 
+var gitStatusCmd = &cobra.Command{
+	Use:   "status",
+	Short: "Show working tree status for all tracked repositories",
+	Run: func(cmd *cobra.Command, args []string) {
+		statusGit()
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(gitCmd)
 	gitCmd.AddCommand(gitCleanCmd)
+	gitCmd.AddCommand(gitStatusCmd)
 	gitCleanCmd.Flags().BoolVarP(&forceClean, "force", "f", false, "Force clean (removes all untracked files including secrets and data)")
 }
 
 func runInDir(dir string, command string, args ...string) (string, error) {
-	cmd := exec.Command(command, args...)
+	cmd := execCommand(command, args...)
 	cmd.Dir = dir
 	var outBuf, errBuf bytes.Buffer
 	cmd.Stdout = &outBuf
@@ -183,4 +192,58 @@ func cleanGit() {
 	}
 
 	fmt.Println("🎉 Workspace Cleanup Complete!")
+}
+
+func statusGit() {
+	fmt.Println("📊 Workspace Git Status")
+	fmt.Println("-----------------------")
+
+	repos := getRepos()
+	if len(repos) == 0 {
+		fmt.Println("❌ No repositories found.")
+		return
+	}
+
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
+	fmt.Fprintln(w, "REPOSITORY\tBRANCH\tCHANGES\tSYNC")
+
+	for _, repo := range repos {
+		repoName := filepath.Base(repo)
+
+		// 1. Get Branch
+		branchOut, err := runInDir(repo, "git", "symbolic-ref", "--short", "HEAD")
+		branch := "unknown"
+		if err == nil {
+			branch = strings.TrimSpace(branchOut)
+		}
+
+		// 2. Uncommitted changes
+		statusOut, _ := runInDir(repo, "git", "status", "-s")
+		changes := "Clean"
+		if strings.TrimSpace(statusOut) != "" {
+			changes = "⚠️  Dirty (" + fmt.Sprint(len(strings.Split(strings.TrimSpace(statusOut), "\n"))) + ")"
+		}
+
+		// 3. Ahead/Behind origin
+		syncState := "Up to date"
+		countOut, err := runInDir(repo, "git", "rev-list", "--left-right", "--count", "origin/"+branch+"..."+branch)
+		if err == nil {
+			parts := strings.Fields(strings.TrimSpace(countOut))
+			if len(parts) == 2 {
+				behind := parts[0]
+				ahead := parts[1]
+				if ahead != "0" && behind != "0" {
+					syncState = fmt.Sprintf("↑%s ↓%s", ahead, behind)
+				} else if ahead != "0" {
+					syncState = fmt.Sprintf("↑%s", ahead)
+				} else if behind != "0" {
+					syncState = fmt.Sprintf("↓%s", behind)
+				}
+			}
+		}
+
+		fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", repoName, branch, changes, syncState)
+	}
+	w.Flush()
+	fmt.Println("-----------------------")
 }
