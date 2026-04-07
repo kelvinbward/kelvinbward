@@ -1,9 +1,9 @@
-name: Read-Only Guard
+name: Read-Only Guard (Public Assets)
 
 on:
   pull_request:
     paths:
-      - 'public/resume/**'
+      - 'public/**'
 
 jobs:
   check-readonly:
@@ -12,7 +12,7 @@ jobs:
       - name: Check for Automation Bypass
         id: check-bypass
         run: |
-          if [[ "${{ github.actor }}" == "github-actions[bot]" ]] || [[ "${{ github.head_ref }}" == "deploy/resume-update" ]]; then
+          if [[ "${{ github.actor }}" == "github-actions[bot]" ]] || [[ "${{ github.head_ref }}" == deploy/* ]]; then
             echo "✅ Automation detected (Actor: ${{ github.actor }}, Branch: ${{ github.head_ref }}). Bypassing guard."
             echo "bypass=true" >> $GITHUB_OUTPUT
           else
@@ -22,7 +22,7 @@ jobs:
       - name: Fail if manual changes detected in distribution folder
         if: steps.check-bypass.outputs.bypass != 'true'
         run: |
-          echo "❌ ERROR: You are attempting to modify 'public/resume/', which is a read-only distribution target."
-          echo "   Please update the source of truth in the 'kelvinbward/resume' repository instead."
-          echo "   Changes made here will be overwritten by the next deployment."
+          echo "❌ ERROR: You are attempting to manually modify 'public/', which is a read-only distribution target."
+          echo "   Please update the source of truth in the respective Spoke repositories instead."
+          echo "   Changes made here manually will be overwritten by the next CI deployment."
           exit 1
