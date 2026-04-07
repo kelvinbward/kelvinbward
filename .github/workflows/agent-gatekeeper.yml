@@ -10,10 +10,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Verify AGENTS.md exists
+      - name: Verify AGENTS.md compliance
         run: |
           if [ ! -f AGENTS.md ]; then
             echo "Error: AGENTS.md is missing!"
             exit 1
           fi
-          echo "AGENTS.md exists."
+          if ! grep -q "## 📡 Service Topology" AGENTS.md; then
+            echo "Error: Service Topology section missing!"
+            exit 1
+          fi
+          if ! grep -q "## 🔄 Handoff Protocol" AGENTS.md; then
+            echo "Error: Handoff Protocol section missing!"
+            exit 1
+          fi
+          echo "AGENTS.md is compliant."
