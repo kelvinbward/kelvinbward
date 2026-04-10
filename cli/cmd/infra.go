@@ -81,11 +81,8 @@ var infraLogsCmd = &cobra.Command{
 func initInfra() {
 	fmt.Println("🚀 Starting Private Cloud Bootstrap...")
 
-	// Determine workspace root dynamically
 	workspaceRoot := ResolveWorkspaceRoot()
-
 	targetDir := filepath.Join(workspaceRoot, "pi-cluster-configs")
-	infraScriptsDir := filepath.Join(workspaceRoot, "kelvinbward", "scripts", "infra")
 
 	fmt.Printf("📂 Target Directory: %s\n", targetDir)
 
@@ -103,35 +100,11 @@ func initInfra() {
 		fmt.Println("   ✅ 'web_gateway' network exists.")
 	}
 
-	// 2. Scouting & Scaffolding
-	fmt.Println("📁 [Step 2] Scaffolding Directories...")
-	scaffoldCmd := execCommand(filepath.Join(infraScriptsDir, "scaffold_dirs.sh"), targetDir)
-	scaffoldCmd.Stdout = os.Stdout
-	scaffoldCmd.Stderr = os.Stderr
-	runOrWarn("scaffold_dirs.sh", scaffoldCmd)
-
-	// 3. Generating Configurations
-	fmt.Println("📝 [Step 3] Generating Docker Configs...")
-	genConfigsCmd := execCommand(filepath.Join(infraScriptsDir, "gen_configs.sh"), targetDir)
-	genConfigsCmd.Stdout = os.Stdout
-	genConfigsCmd.Stderr = os.Stderr
-	runOrWarn("gen_configs.sh", genConfigsCmd)
-
-	// 4. Generating Automation Scripts
-	fmt.Println("⚙️ [Step 4] Generating Helper Scripts...")
-	genScriptsCmd := execCommand(filepath.Join(infraScriptsDir, "gen_scripts.sh"), targetDir)
-	genScriptsCmd.Stdout = os.Stdout
-	genScriptsCmd.Stderr = os.Stderr
-	runOrWarn("gen_scripts.sh", genScriptsCmd)
-
-	// 5. Bootstrap Instructions
-	fmt.Println("\n✅ Bootstrap Complete!")
-
+	// 2. Bootstrap
 	if runSetup {
-		fmt.Println("🚀 Executing setup.sh automatically...")
+		fmt.Println("🚀 Executing setup.sh...")
 		setupScriptPath := filepath.Join(targetDir, "setup.sh")
 
-		// Setup script might need to execute docker commands from within targetDir
 		triggerSetup := execCommand(setupScriptPath)
 		triggerSetup.Dir = targetDir
 		triggerSetup.Stdout = os.Stdout
@@ -143,29 +116,15 @@ func initInfra() {
 			fmt.Println("✅ setup.sh executed successfully.")
 		}
 	} else {
+		fmt.Println("\n✅ Network ready.")
 		fmt.Println("========================================================================")
 		fmt.Println("To start your Private Cloud infrastructure:")
 		fmt.Println("")
-		fmt.Println("1. Configure Applications (Optional):")
-		fmt.Printf("   Edit apps.config in %s to enable/disable specific apps.\n", targetDir)
+		fmt.Println("  cd " + targetDir)
+		fmt.Println("  ./setup.sh")
 		fmt.Println("")
-		fmt.Println("2. Start the Gateway (Nginx Proxy Manager):")
-		fmt.Printf("   cd %s/gateway\n", targetDir)
-		fmt.Println("   docker compose up -d")
-		fmt.Println("")
-		fmt.Println("3. Start Core Services (Database):")
-		fmt.Printf("   cd %s/core-services\n", targetDir)
-		fmt.Println("   docker compose up -d")
-		fmt.Println("")
-		fmt.Println("4. Start Management Services (Portainer):")
-		fmt.Printf("   cd %s/management\n", targetDir)
-		fmt.Println("   docker compose up -d")
-		fmt.Println("")
-		fmt.Println("5. Run the orchestration setup:")
-		fmt.Printf("   cd %s\n", targetDir)
-		fmt.Println("   ./setup.sh")
-		fmt.Println("")
-		fmt.Println("Your environment is now ready to support the public apps!")
+		fmt.Println("Or re-run with --setup to do this automatically:")
+		fmt.Println("  kelvin-cli infra init --setup")
 		fmt.Println("========================================================================")
 	}
 }

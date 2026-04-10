@@ -20,7 +20,7 @@ var reposCmd = &cobra.Command{
 var reposSyncCmd = &cobra.Command{
 	Use:   "sync",
 	Short: "Sync the locally tracked repositories list",
-	Long:  "Scans the current workspace root for Git repositories and generates scripts/repos.sh dynamically.",
+	Long:  "Scans the workspace root for Git repositories. Use --update-config to append newly discovered repos to pi-cluster-configs/apps.config.",
 	Run: func(cmd *cobra.Command, args []string) {
 		syncRepos()
 	},
@@ -105,10 +105,10 @@ func syncRepos() {
 }
 
 func updateAppsConfigTemplate(workspaceRoot string, foundRepos []string) {
-	templatePath := filepath.Join(workspaceRoot, "kelvinbward", "scripts", "infra", "templates", "apps.config.template")
+	templatePath := filepath.Join(workspaceRoot, "pi-cluster-configs", "apps.config")
 	content, err := os.ReadFile(templatePath)
 	if err != nil {
-		fmt.Printf("❌ Failed to read apps.config.template: %v\n", err)
+		fmt.Printf("❌ Failed to read apps.config: %v\n", err)
 		return
 	}
 	templateText := string(content)

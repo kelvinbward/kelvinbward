@@ -1,17 +1,23 @@
 # Ecosystem Scripts
 
-> **⚠️ DEPRECATED**
-> 
-> The bash scripts in this directory are legacy tools from the initial bootstrap phase. 
-> All functionality has been ported to the `kelvin-cli` Go application for better 
-> cross-platform support, robust error handling, and unified orchestration.
+> **\ud83d\udee0 Operational interface moved to `kelvin-cli`**
+>
+> All legacy bootstrap bash scripts (`init_infra.sh`, `git_broadcast.sh`, `repos.sh`,
+> `infra/gen_*.sh`, etc.) have been removed. `kelvin-cli` is now the **sole entry point**
+> for infrastructure operations across this ecosystem.
 
-## Migrating
+## Usage Reference
 
-| Legacy Script | CLI Equivalent |
+| Task | Command |
 |:---|:---|
-| `init_infra.sh` | `kelvin-cli infra init --setup` |
-| `git_broadcast.sh` | `kelvin-cli git clean`, etc. |
-| `repos.sh` | `kelvin-cli repos sync` |
+| Bootstrap the private cloud | `kelvin-cli infra init --setup` |
+| Check cluster health | `kelvin-cli infra status` |
+| Tail app/service logs | `kelvin-cli infra logs <app>` |
+| Reload the Nginx gateway | `kelvin-cli infra reload` |
+| Tear down local cluster | `kelvin-cli infra clean` |
+| Git status across all repos | `kelvin-cli git status` |
+| Clean & reset all repos | `kelvin-cli git clean` |
+| Regenerate repo registry | `kelvin-cli repos sync` |
+| Scaffold a new spoke app | `kelvin-cli app create <name> --type <nextjs\|astro>` |
 
-Please use `kelvin-cli --help` for the modern toolchain. These scripts remain as a fallback but will be removed in a future release.
+For full flag documentation run `kelvin-cli --help` or `kelvin-cli <command> --help`.
