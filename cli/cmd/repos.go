@@ -128,23 +128,24 @@ func updateAppsConfigTemplate(workspaceRoot string, foundRepos []string) {
 			continue // Skip repositories without a Dockerfile
 		}
 
-		// Get remote origin
+		// Derive identifier first — dedup by it, not by URL.
+		// This correctly handles https:// vs git@github.com: URL variants of the same
+		// remote, and apps that have no remote origin set yet (newly scaffolded).
+		identifier := strings.ToUpper(strings.ReplaceAll(name, "-", ""))
+
+		if strings.Contains(templateText, fmt.Sprintf("APP_%s_ENABLED=", identifier)) {
+			continue // Already registered
+		}
+
+		// Get remote origin — best-effort, new apps may not have one yet
 		urlCmd := execCommand("git", "config", "--get", "remote.origin.url")
 		urlCmd.Dir = repoDir
 		out, _ := urlCmd.Output()
 		repoURL := strings.TrimSpace(string(out))
-
 		if repoURL == "" {
-			continue
+			repoURL = "# TODO: set remote origin"
 		}
 
-		// Check if it's already in the template
-		if strings.Contains(templateText, repoURL) {
-			continue // Already exists
-		}
-
-		// It's a new app!
-		identifier := strings.ToUpper(strings.ReplaceAll(name, "-", ""))
 		newApps = append(newApps, identifier)
 
 		newBlocks.WriteString(fmt.Sprintf("\n# --- APP: %s ---\n", identifier))
@@ -159,13 +160,15 @@ func updateAppsConfigTemplate(workspaceRoot string, foundRepos []string) {
 		return
 	}
 
-	// Update the REGISTERED_APPS array in the file
+	// Update the REGISTERED_APPS array — guard against appending duplicates
 	lines := strings.Split(templateText, "\n")
 	for i, line := range lines {
 		if strings.HasPrefix(line, "REGISTERED_APPS=(") {
 			trimmed := strings.TrimSuffix(strings.TrimSpace(line), ")")
 			for _, app := range newApps {
-				trimmed += fmt.Sprintf(" \"%s\"", app)
+				if !strings.Contains(trimmed, fmt.Sprintf("\"%s\"", app)) {
+					trimmed += fmt.Sprintf(" \"%s\"", app)
+				}
 			}
 			trimmed += ")"
 			lines[i] = trimmed
