@@ -18,27 +18,28 @@ The ecosystem follows a **Registry-Driven** bootstrap process. The `apps.config`
 
 ```mermaid
 graph TD
-    User(["User / Agent"]) -->|1. Runs| INIT[init_infra.sh]
-    
-    subgraph "Bootstrap Process"
-        INIT -->|Reads| REG[apps.config]
-        INIT -->|Installs| SETUP["setup.sh (Template)"]
-        INIT -->|Scaffolds| DIRS[Directory Structure]
+    User(["User / Agent"]) -->|1. Runs| CLI["kelvin-cli infra init"]
+
+    subgraph "Bootstrap (kelvin-cli)"
+        CLI -->|Creates| NET[web_gateway Network]
+        CLI -->|Reads| REG[apps.config]
+        CLI -->|Runs| SETUP["pi-cluster-configs/setup.sh"]
     end
-    
+
     subgraph "Orchestration (setup.sh)"
+        SETUP -->|Generates| SECRETS[secrets.env via generate_secrets.sh]
         SETUP -->|Iterates| REG
         SETUP -->|Clones/Recovers| APPS["Public Repos (Modules)"]
-        SETUP -->|Generates| ENV[".env Configs"]
         SETUP -->|Starts| DOCKER[Docker Compose Cluster]
+        SETUP -->|Hardens| NPM[Nginx Gateway via configure_gateway.sh]
     end
-    
+
     subgraph "Runtime Traffic"
-        WEB[Web Client] -->|*.localhost| NPM[Nginx Gateway]
+        WEB[Web Client] -->|*.localhost| NPM
         NPM -->|goobface.com| GOOB[Goobface]
         NPM -->|kelvinbward.com| RES[Resume]
         NPM -->|/3d-printing| BLOG[3D Blog]
-        NPM -->|Other| APPS[Other Apps]
+        NPM -->|Other| APPS
     end
 ```
 
@@ -61,14 +62,32 @@ graph TD
 
 ## 🛠 Utility Tooling: `kelvin-cli`
 
-This ecosystem uses a custom compiled Go binary embedded within `kelvinbward/cli` to orchestrate spanning tasks across the federated Hub-and-Spoke repositories. 
+This ecosystem uses a custom compiled Go binary (`kelvinbward/cli`) to orchestrate spanning tasks across the federated Hub-and-Spoke repositories. It is the **primary operational interface** — all legacy bash scripts have been removed.
 
-The CLI tools natively replace legacy bash scripts to operate:
-- **`kelvin-cli infra status`**: Generates a unified overview of all active ecosystem applications and their docker container states.
-- **`kelvin-cli infra logs <app_name>`**: Zero-friction log tailing that discovers the container automatically.
-- **`kelvin-cli infra reload`**: Securely bounces the proxy without dropping the entire network topology.
-- **`kelvin-cli git status`**: Analyzes the working tree and origin divergency across *all* connected projects in a cleanly formatted table.
-- **`kelvin-cli app create <name> --type <framework>`**: Scaffolds an entirely new business application, injects ecosystem-standard continuous deployment docker files, binds to the `web_gateway` network router, and dynamically registers it.
+### `infra` — Infrastructure Management
+| Command | Description |
+| :--- | :--- |
+| `kelvin-cli infra init` | Bootstrap the private cloud: creates the `web_gateway` Docker network and runs `pi-cluster-configs/setup.sh` (includes secret generation and gateway hardening). Use `--setup` / `-s` to execute `setup.sh` automatically. |
+| `kelvin-cli infra status` | Tabular health overview of all containers attached to `web_gateway`. |
+| `kelvin-cli infra logs <app>` | Tail logs for any registered spoke or core service (`gateway`, `core-services`, `management`). Resolves container name via `apps.config`. |
+| `kelvin-cli infra reload` | Securely restart the Nginx gateway router without tearing down the network. |
+| `kelvin-cli infra clean` | Interactively stop all cluster services and remove the `web_gateway` network. |
+
+### `git` — Workspace Git Utilities
+| Command | Description |
+| :--- | :--- |
+| `kelvin-cli git status` | Tabular working-tree status (branch, dirty files, ahead/behind origin) for every git repo in the workspace. |
+| `kelvin-cli git clean` | Safe-mode: stash changes, reset to `origin/main`, prune local branches (preserves `secrets.env`, data dirs). Use `--force` / `-f` to nuke all untracked files. |
+
+### `repos` — Repository Registry
+| Command | Description |
+| :--- | :--- |
+| `kelvin-cli repos sync` | Scans the workspace root for git repos and regenerates `scripts/repos.sh`. Use `--update-config` / `-u` to auto-append newly discovered repos to `apps.config.template`. |
+
+### `app` — Spoke Application Scaffolding
+| Command | Description |
+| :--- | :--- |
+| `kelvin-cli app create <name> --type <framework>` | Scaffold a new spoke (`nextjs` or `astro`), inject ecosystem-standard `Dockerfile` + `docker-compose.yml`, bind to `web_gateway`, and register it via `repos sync`. |
 
 ## 🚀 Execution Modes
 
@@ -82,11 +101,16 @@ This Hub supports multiple modes of operation to ensure flexibility across devel
 | **Static** | `npm run build` | GitHub Pages deployment (Static HTML Export). |
 
 ### Bootstrap Your Own Private Cloud
-To run the full "Cluster Mode", you can bootstrap a fresh `pi-cluster-configs` setup matching the production architecture:
+To run the full "Cluster Mode", bootstrap a fresh `pi-cluster-configs` setup using `kelvin-cli`:
 
 ```bash
-# Initialize infrastructure
-./scripts/init_infra.sh
+# One-shot: initialize network, generate secrets, and bring up the full cluster
+kelvin-cli infra init --setup
+
+# Or step-by-step:
+kelvin-cli infra init          # creates web_gateway network
+cd ../pi-cluster-configs
+./setup.sh                     # generates secrets.env, starts all services
 ```
 
 ## 🛡️ Security & Governance
