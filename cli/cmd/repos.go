@@ -29,7 +29,7 @@ var reposSyncCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(reposCmd)
 	reposCmd.AddCommand(reposSyncCmd)
-	reposSyncCmd.Flags().BoolVarP(&updateConfig, "update-config", "u", false, "Update the apps.config.template with newly discovered repositories")
+	reposSyncCmd.Flags().BoolVarP(&updateConfig, "update-config", "u", false, "Update the apps.config with newly discovered repositories")
 }
 
 func syncRepos() {
@@ -156,7 +156,7 @@ func updateAppsConfigTemplate(workspaceRoot string, foundRepos []string) {
 	}
 
 	if len(newApps) == 0 {
-		fmt.Println("✅ apps.config.template is already up to date.")
+		fmt.Println("✅ apps.config is already up to date.")
 		return
 	}
 
@@ -179,8 +179,8 @@ func updateAppsConfigTemplate(workspaceRoot string, foundRepos []string) {
 	newTemplateText := strings.Join(lines, "\n") + newBlocks.String()
 
 	if err := os.WriteFile(templatePath, []byte(newTemplateText), 0644); err != nil {
-		fmt.Printf("❌ Failed to update apps.config.template: %v\n", err)
+		fmt.Printf("❌ Failed to update apps.config: %v\n", err)
 	} else {
-		fmt.Printf("🚀 Added %d new applications to apps.config.template: %v\n", len(newApps), newApps)
+		fmt.Printf("🚀 Added %d new applications to apps.config: %v\n", len(newApps), newApps)
 	}
 }

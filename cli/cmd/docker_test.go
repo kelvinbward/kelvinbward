@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"bytes"
-	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -39,9 +37,8 @@ func TestDockerComposeAcrossAll(t *testing.T) {
 
 	// Create a mock workspace
 	mockRoot := t.TempDir()
-	originalResolve := ResolveWorkspaceRoot
-	ResolveWorkspaceRoot = func() string { return mockRoot }
-	defer func() { ResolveWorkspaceRoot = originalResolve }()
+	os.Setenv("KELVIN_WORKSPACE_ROOT", mockRoot)
+	defer os.Unsetenv("KELVIN_WORKSPACE_ROOT")
 
 	// Scaffold pi-cluster-configs
 	infraDir := filepath.Join(mockRoot, "pi-cluster-configs")

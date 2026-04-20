@@ -82,7 +82,7 @@ This ecosystem uses a custom compiled Go binary (`kelvinbward/cli`) to orchestra
 ### `repos` — Repository Registry
 | Command | Description |
 | :--- | :--- |
-| `kelvin-cli repos sync` | Scans the workspace root for git repos and regenerates `scripts/repos.sh`. Use `--update-config` / `-u` to auto-append newly discovered repos to `apps.config.template`. |
+| `kelvin-cli repos sync` | Scans the workspace root for git repos and updates the ecosystem registry. Use `--update-config` / `-u` to auto-append newly discovered repos to `pi-cluster-configs/apps.config`. |
 
 ### `app` — Spoke Application Scaffolding
 | Command | Description |
