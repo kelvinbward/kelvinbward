@@ -75,6 +75,9 @@ func syncRepos() {
 		gitPath := filepath.Join(targetPath, ".git")
 		gitInfo, err := os.Stat(gitPath)
 		if err == nil && gitInfo.IsDir() {
+			if name == "yumfood" {
+				continue // Independent project
+			}
 			builder.WriteString(fmt.Sprintf("  \"$WORKSPACE_ROOT/%s\"\n", name))
 			fmt.Printf("  Found: %s\n", name)
 			validRepoNames = append(validRepoNames, name)
@@ -117,8 +120,8 @@ func updateAppsConfigTemplate(workspaceRoot string, foundRepos []string) {
 	var newBlocks strings.Builder
 
 	for _, name := range foundRepos {
-		if name == "pi-cluster-configs" || name == ".github" || name == "kelvinbward" {
-			continue // System repos
+		if name == "pi-cluster-configs" || name == ".github" || name == "kelvinbward" || name == "yumfood" {
+			continue // System repos & independent projects
 		}
 
 		repoDir := filepath.Join(workspaceRoot, name)
