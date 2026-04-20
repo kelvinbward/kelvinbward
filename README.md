@@ -18,7 +18,7 @@ The ecosystem follows a **Registry-Driven** bootstrap process. The `apps.config`
 
 ```mermaid
 graph TD
-    User(["User / Agent"]) -->|1. Runs| INIT[init_infra.sh]
+    User(["User / Agent"]) -->|1. Runs| INIT["kelvin-cli infra init"]
     
     subgraph "Bootstrap Process"
         INIT -->|Reads| REG[apps.config]
@@ -86,7 +86,7 @@ To run the full "Cluster Mode", you can bootstrap a fresh `pi-cluster-configs` s
 
 ```bash
 # Initialize infrastructure
-./scripts/init_infra.sh
+kelvin-cli infra init
 ```
 
 ## 🛡️ Security & Governance
