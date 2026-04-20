@@ -15,5 +15,6 @@ REPOS=(
   "$WORKSPACE_ROOT/kelvinbward"
   "$WORKSPACE_ROOT/middleware"
   "$WORKSPACE_ROOT/pi-cluster-configs"
+  "$WORKSPACE_ROOT/potatogang"
   "$WORKSPACE_ROOT/resume"
 )
