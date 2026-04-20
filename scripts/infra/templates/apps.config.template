@@ -3,7 +3,7 @@
 # Format: Bash Associative Array concept (simulated)
 
 # List of Registered Applications (Uppercase Identifiers)
-REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE" "RESUME" "GOOBFACE" "CREATIVEAUDIOJS" "BLOG" "CLIPBOARDSPOKE" "POTATOGANG")
+REGISTERED_APPS=("KELVINBWARD" "MIDDLEWARE" "RESUME" "GOOBFACE" "CREATIVEAUDIOJS" "BLOG" "CLIPBOARDSPOKE")
 
 # --- APP: KELVINBWARD ---
 APP_KELVINBWARD_ENABLED=true
@@ -47,8 +47,3 @@ APP_CLIPBOARDSPOKE_REPO="https://github.com/kelvinbward/clipboard-spoke.git"
 APP_CLIPBOARDSPOKE_DIR="apps/clipboard-spoke"
 APP_CLIPBOARDSPOKE_MODE="cluster"
 
-# --- APP: POTATOGANG ---
-APP_POTATOGANG_ENABLED=true
-APP_POTATOGANG_REPO="# TODO: set remote origin"
-APP_POTATOGANG_DIR="apps/potatogang"
-APP_POTATOGANG_MODE="cluster"
